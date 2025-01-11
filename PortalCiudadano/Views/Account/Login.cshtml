@@ -1,0 +1,87 @@
+﻿@using PortalCiudadano.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<main aria-labelledby="title">
+    <h2 id="title" class="text-center"></h2>
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-5">
+            <!-- 5 columnas en dispositivos medianos y grandes -->
+            <!-- Inicio de la tarjeta -->
+            <br />
+            <div class="card shadow">
+                <div class="card-body">
+                    <section id="loginForm">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                        {
+                            <br />
+                            @Html.AntiForgeryToken()
+                            <main class="form-signin w-100 m-auto">
+                                <form>
+                                    <div class="svg-container">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="60" fill="#fd7e14" class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                                            <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5" />
+                                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                        </svg>
+                                    </div>
+
+                                    <style>
+                                        .svg-container {
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            height: 10vh; /* Ajusta esto según el tamaño del contenedor */
+                                        }
+                                    </style>
+
+                                    <h1 class="h3 mb-3 fw-normal">Inicio de sesión Portal ciudadano</h1>
+                                    <br />
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger text-center" }) <!-- Validaciones centradas -->
+                                    <div class="form-floating">
+                                        <input type="email" name="Email" class="form-control mb-3" id="floatingInput" placeholder="name@example.com">
+                                        <label for="floatingInput">Usuario</label>
+                                    </div>
+
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    <div class="form-floating">
+                                        <input type="password" name="Password" class="form-control" id="floatingPassword" placeholder="Contraseña">
+                                        <label for="floatingPassword">Contraseña</label>
+                                    </div>
+
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" value="remember-me"> Recordar?
+                                        </label>
+                                    </div>
+                                    <button class="w-100 btn btn-primary" type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock-fill" viewBox="0 0 16 16" style="margin-bottom: 3px;">
+                                            <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2" />
+                                        </svg> Iniciar Sesión
+                                    </button>
+
+                                    <button type="button" class="btn btn-outline-secondary mt-1 w-100" onclick="location.href='@Url.Action("Create", "Users")'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16" style="margin-bottom: 3px;">
+                                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5" />
+                                        </svg> Crear Usuario
+                                    </button>
+                                </form>
+                            </main>
+                        }
+                    </section>
+                </div>
+            </div>
+            <!-- Fin de la tarjeta -->
+        </div>
+    </div>
+</main>
+
+
+
+@section Scripts {
+    <!-- Otras inclusiones -->
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

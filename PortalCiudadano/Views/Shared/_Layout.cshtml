@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Alcaldia de Bolivar</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        .custom-navbar {
+            background-color: #004700; /* Color verde oscuro */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra en el borde inferior */
+        }
+
+        body {
+            padding-top: 70px; /* Ajuste para que el contenido no esté detrás del navbar */
+            padding-bottom: 30px; /* Margen inferior para evitar superposición al desplazarse */
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark custom-navbar fixed-top">
+        <div class="container">
+            <a href="@Url.Action("Index", "Home", new { area = "" })" class="navbar-brand" style="margin: 0; padding: 0;">
+                <img src="~/Content/Imagenes/MARCA_GAD.svg" alt="Inicio" class="brand-logo">
+            </a>
+
+            <style>
+                .brand-logo {
+                    width: 120px; /* Ajusta el tamaño aquí */
+                    height: auto; /* Mantiene la relación de aspecto */
+                }
+            </style>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Usuario", "Index", "Users", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
