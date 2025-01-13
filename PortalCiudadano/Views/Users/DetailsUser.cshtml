@@ -1,0 +1,36 @@
+﻿@model PortalCiudadano.Models.User
+
+<div class="d-flex justify-content-center align-items-center vh-80">
+    <div class="card shadow" style="width: 24rem;">
+        <div class="card-body text-center">
+            @if (!string.IsNullOrEmpty(Model.Foto))
+            {
+                <img src="@Url.Content(Model.Foto)"
+                     alt="Foto del usuario"
+                     class="rounded-circle mb-3"
+                     style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #ddd;">
+            }
+            else
+            {
+                <img src="~/Content/Imagenes/no-user.png"
+                     alt="Foto por defecto"
+                     class="rounded-circle mb-3"
+                     style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #ddd;">
+            }
+
+            <h5 class="card-title">@Model.Nombres @Model.Apellidos</h5>
+            <p class="card-text text-muted">@Model.UserName</p>
+
+            <dl class="row mt-4">
+                <dt class="col-12 col-md-5 text-md-end text-start">Cédula:</dt>
+                <dd class="col-12 col-md-7 text-md-start text-start">@Model.Cedula</dd>
+
+                <dt class="col-12 col-md-5 text-md-end text-start">Teléfono:</dt>
+                <dd class="col-12 col-md-7 text-md-start text-start">@Model.Telefono</dd>
+            </dl>
+
+            <a href="@Url.Action("EditUser", "Users")" class="btn btn-primary mt-3">Editar Perfil</a>
+        </div>
+    </div>
+</div>
+

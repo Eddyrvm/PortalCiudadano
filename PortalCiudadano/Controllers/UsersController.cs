@@ -137,21 +137,25 @@ namespace PortalCiudadano.Controllers
 
         public ActionResult DetailsUser()
         {
-            string currentUserName = User.Identity.Name;
+            // Obtener el nombre de usuario o el identificador del usuario logueado
+            string userName = User.Identity.Name;
 
-            if (string.IsNullOrEmpty(currentUserName))
+            if (string.IsNullOrEmpty(userName))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Usuario no autenticado");
             }
 
-            User user = db.Users.FirstOrDefault(u => u.UserName == currentUserName);
-
+            // Buscar el usuario en la base de datos usando el nombre de usuario
+            User user = db.Users.FirstOrDefault(u => u.UserName == userName);
             if (user == null)
             {
-                return HttpNotFound();
+                return HttpNotFound("Usuario no encontrado");
             }
 
-            return View(user);
+            // Guardar la ID del usuario en TempData
+            TempData["UserId"] = user.Id;
+
+            return View(user); // Pasar el modelo del usuario a la vista
         }
 
         //[Authorize(Roles = "Admin")]
