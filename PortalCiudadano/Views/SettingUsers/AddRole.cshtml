@@ -1,0 +1,34 @@
+﻿@model PortalCiudadano.ViewModels.UserView
+@{
+    ViewBag.Title = "AddRole";
+}
+
+<h3 class="text-bg-warning">Agregar roles al usuario: @Model.Name</h3>
+<h3>@ViewBag.Error</h3>
+@using (Html.BeginForm("AddRole", "SettingUsers", new { userId = Model.UserId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4">
+                <!--Espacio vacío o contenido adicional-->
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("RoleId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Role.RoleId, "", new { @class = "text-danger" })
+                <br />
+                <a class="btn btn-primary btn-sm" title="" href="@Url.Action("Roles", "SettingUsers", new { userId = Model.UserId})">
+                    <span class="glyphicon glyphicon-arrow-left"></span> Volver
+                </a>
+                <input type="submit" value="Agregar rol" class="btn btn-success btn-sm " />
+            </div>
+            <div class="col-md-4 text-right">
+
+            </div>
+        </div>
+    </div>
+
+
+
+}
+

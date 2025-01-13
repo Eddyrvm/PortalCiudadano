@@ -1,0 +1,45 @@
+﻿@model PortalCiudadano.ViewModels.UserView
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Administrar Roles del Usuario: @Model.NombreCompleto</h2>
+<br />
+
+<p>
+    <a class="btn btn-primary btn-sm" title="" href="@Url.Action("Index", "SettingUsers")">
+        <span class="glyphicon glyphicon-arrow-left"></span> Volver a la Lista
+    </a>
+    <a class="btn btn-success btn-sm" title="" href="@Url.Action("AddRole", "SettingUsers",new { userId = Model.UserId})">
+        <span class="glyphicon glyphicon-circle-arrow-up"></span> Asignar Rol
+    </a>
+
+</p>
+<div class="panel panel-primary table-responsive active">
+    <table class="table table-hover table-responsive table-striped " id="My Table">
+
+        @for (int i = 0; i < Model.Roles.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Roles[i].Name)
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-danger btn-sm" title="EliminarRol" href="@Url.Action("Delete", "SettingUsers", new { userId = Model.UserId, roleId = Model.Roles[i].RoleId })">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-node-minus-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M16 8a5 5 0 0 1-9.975.5H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5h2.025A5 5 0 0 1 16 8m-2 0a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5A.5.5 0 0 0 14 8" />
+                            </svg> Quitar
+                        </a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+

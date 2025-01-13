@@ -1,74 +1,85 @@
 ﻿@model PortalCiudadano.Models.User
 
-@{
-    ViewBag.Title = "Details";
-}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- Card de Detalles del Usuario -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body text-center">
 
-<h2>Details</h2>
+                    <h5 class="card-title text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#198754" class="bi bi-person-badge" viewBox="0 0 16 16" style="margin-bottom: 3px;">
+                            <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                            <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492z" />
+                        </svg> Detalle del Usuario
+                    </h5>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+                    @if (!string.IsNullOrEmpty(Model.Foto))
+                    {
+                        <img src="@Url.Content(Model.Foto)"
+                             alt="Foto del usuario"
+                             class="rounded-circle mb-3"
+                             style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #ddd;">
+                    }
+                    else
+                    {
+                        <img src="~/Content/Imagenes/no-user.png"
+                             alt="Foto por defecto"
+                             class="rounded-circle mb-3"
+                             style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #ddd;">
+                    }
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+                    <h5 class="card-title">@Model.Nombres @Model.Apellidos</h5>
+                    <p class="card-text text-muted">@Model.UserName</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+                    <dl class="row mt-4">
+                        <dt class="col-12 col-md-5 text-md-end text-start">Cédula:</dt>
+                        <dd class="col-12 col-md-7 text-md-start text-start">@Model.Cedula</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+                        <dt class="col-12 col-md-5 text-md-end text-start">Teléfono:</dt>
+                        <dd class="col-12 col-md-7 text-md-start text-start">@Model.Telefono</dd>
+                    </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Cedula)
-        </dt>
+                    <a class="btn btn-warning" title="Editar Perfil del Usuario" href="@Url.Action("Edit", "Users", new { id = Model.Id })">
+                        <span class="glyphicon glyphicon-circle-arrow-up"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16" style="margin-bottom: 3px;">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                        </svg> Editar Perfil del Usuario
+                    </a>
+                </div>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Cedula)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombres)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombres)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Apellidos)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Apellidos)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Foto)
-        </dd>
-
-    </dl>
+        <!-- Card de Roles del Usuario -->
+        <div class="col-md-4 mt-4 mt-md-0">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#fd7e14" class="bi bi-briefcase-fill" viewBox="0 0 16 16" style="margin-bottom: 3px;">
+                            <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5" />
+                            <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85z" />
+                        </svg> Roles del Usuario
+                    </h5>
+                    <div class="card-body">
+                        @if (ViewBag.Roles != null && ViewBag.Roles.Count > 0)
+                        {
+                            <ul class="list-group">
+                                @foreach (var role in ViewBag.Roles)
+                                {
+                                    <li class="list-group-item"><h4>@role.Name</h4></li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">Este usuario no tiene roles asignados.</p>
+                        }
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

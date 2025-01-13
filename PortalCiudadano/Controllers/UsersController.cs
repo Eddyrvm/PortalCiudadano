@@ -1,6 +1,7 @@
-﻿using PortalCiudadano.Clases;
-using PortalCiudadano.Helpers;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using PortalCiudadano.Clases;
 using PortalCiudadano.Models;
+using PortalCiudadano.ViewModels;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -13,8 +14,9 @@ namespace PortalCiudadano.Controllers
     public class UsersController : Controller
     {
         private PortalCiudadanoContext db = new PortalCiudadanoContext();
+        private ApplicationDbContext _identityContext = new ApplicationDbContext();
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Users.ToList());
@@ -54,8 +56,6 @@ namespace PortalCiudadano.Controllers
             }
         }
 
-
-        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
@@ -119,22 +119,65 @@ namespace PortalCiudadano.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "Admin")]
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult SetUserId(int id)
         {
-            if (id == null)
+            TempData["UserId"] = id;
+            return RedirectToAction("Details");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Details()
+        {
+            // Verifica si TempData tiene el UserId
+            if (TempData["UserId"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "El identificador de usuario no está disponible.");
             }
-            User user = db.Users.Find(id);
+
+            // Recupera el UserId desde TempData
+            if (!int.TryParse(TempData["UserId"].ToString(), out int userId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "El identificador de usuario no es válido.");
+            }
+
+            // Busca el usuario en el contexto principal
+            var user = db.Users.FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
-                return HttpNotFound();
+                return HttpNotFound("No se encontró el usuario en el sistema.");
             }
+
+            string userName = user.UserName;
+
+            // Busca el usuario en el contexto de Identity usando UserName y mapea a UserView
+            var userInIdentity = _identityContext.Users
+                                    .Where(u => u.UserName == userName)
+                                    .FirstOrDefault();
+
+            if (userInIdentity == null)
+            {
+                return HttpNotFound("No se encontró el usuario en el sistema de identidad.");
+            }
+
+            // Busca los roles asociados a este usuario en el contexto de Identity
+            var userRoles = (from ur in _identityContext.Set<IdentityUserRole>()
+                             join r in _identityContext.Roles on ur.RoleId equals r.Id
+                             where ur.UserId == userInIdentity.Id
+                             select new RoleView
+                             {
+                                 Name = r.Name
+                             }).ToList();
+
+            // Pasar los roles a la vista
+            ViewBag.Roles = userRoles;
+
+            // Usar el modelo User para la vista
             return View(user);
         }
 
+        [Authorize]
         public ActionResult DetailsUser()
         {
             // Obtener el nombre de usuario o el identificador del usuario logueado
@@ -158,8 +201,95 @@ namespace PortalCiudadano.Controllers
             return View(user); // Pasar el modelo del usuario a la vista
         }
 
-        //[Authorize(Roles = "Admin")]
-        // GET: Users/Edit/5
+        public ActionResult EditUser()
+        {
+            // Verificar si TempData contiene la ID del usuario
+            if (TempData["UserId"] == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "ID de usuario no proporcionada");
+            }
+
+            int userId = (int)TempData["UserId"];
+
+            // Buscar el usuario en la base de datos utilizando la ID
+            var user = db.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return HttpNotFound("Usuario no encontrado");
+            }
+
+            return View(user); // Pasar el modelo del usuario a la vista de edición
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(User user)
+        {
+            // Validar que la ID coincida con un usuario existente
+            var currentUser = db.Users.Find(user.Id);
+            if (currentUser == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Remover la validación de los campos no requeridos
+            ModelState.Remove("Password");
+            ModelState.Remove("ConfirmPassword");
+
+            if (!ModelState.IsValid)
+            {
+                // Opcional: Registrar errores para depuración
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+                return View(user);
+            }
+
+            // Manejo de la foto si se sube un nuevo archivo
+            if (user.FotoFile != null)
+            {
+                var folder = "~/Content/Users";
+                var file = string.Format("{0}.jpg", user.Id); // Usamos la ID directamente
+                var response = FileHelper.UploadPhoto(user.FotoFile, folder, file);
+                if (response)
+                {
+                    currentUser.Foto = string.Format("{0}/{1}", folder, file);
+                }
+            }
+
+            // Actualizar campos del usuario
+            currentUser.UserName = user.UserName;
+            currentUser.Nombres = user.Nombres;
+            currentUser.Apellidos = user.Apellidos;
+            currentUser.Cedula = user.Cedula;
+            currentUser.Telefono = user.Telefono;
+            // Actualizar otros campos necesarios
+
+            try
+            {
+                db.Entry(currentUser).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["SuccessMessage"] = "Los datos fueron modificados.";
+                return RedirectToAction("DetailsUser");
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException?.InnerException?.Message.Contains("_Index") == true)
+                {
+                    ModelState.AddModelError(string.Empty, "El registro ya existe en la base de datos.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+
+            return View(user);
+        }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             if (id <= 0)
@@ -167,7 +297,7 @@ namespace PortalCiudadano.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -178,7 +308,7 @@ namespace PortalCiudadano.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // [Authorize(Roles = "Editar, Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(User user)
         {
             if (user == null || user.Id <= 0)
@@ -250,11 +380,7 @@ namespace PortalCiudadano.Controllers
             return View(user);
         }
 
-
-
-
-        //[Authorize(Roles = "Admin")]
-        // GET: Users/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -269,7 +395,7 @@ namespace PortalCiudadano.Controllers
             return View(user);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -289,5 +415,6 @@ namespace PortalCiudadano.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
