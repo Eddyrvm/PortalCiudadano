@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Configuration;
-using PortalCiudadano.Clases;
 
 namespace PortalCiudadano.Clases
 {
@@ -54,15 +53,71 @@ namespace PortalCiudadano.Clases
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
             var email = WebConfigurationManager.AppSettings["AdminUser"];
             var password = WebConfigurationManager.AppSettings["AdminPassWord"];
+            var nombres = WebConfigurationManager.AppSettings["AdminFirstName"];
+            var apellidos = WebConfigurationManager.AppSettings["AdminLastName"];
+            var cedula = WebConfigurationManager.AppSettings["AdminCedula"];
+
+            // Verifica si el usuario ya existe en ApplicationUser
             var userASP = userManager.FindByName(email);
             if (userASP == null)
             {
-                CreateUserASP(email, "Admin", password);
+                // Crear usuario en ApplicationUser
+                var newUserASP = new ApplicationUser
+                {
+                    UserName = email,
+                    Email = email
+                };
+
+                var result = userManager.Create(newUserASP, password);
+                if (result.Succeeded)
+                {
+                    userManager.AddToRole(newUserASP.Id, "Admin");
+
+                    // Crear el usuario en la tabla Users
+                    using (var dbContext = new PortalCiudadanoContext())
+                    {
+                        var newUser = new User
+                        {
+                            UserName = email,
+                            Nombres = nombres,
+                            Apellidos = apellidos,
+                            Cedula = cedula,
+                        };
+
+                        dbContext.Users.Add(newUser);
+                        dbContext.SaveChanges();
+                    }
+                }
+
                 return;
             }
 
-            userManager.AddToRole(userASP.Id, "Admin");
+            // Verifica si el usuario ya tiene el rol "Admin"
+            if (!userManager.IsInRole(userASP.Id, "Admin"))
+            {
+                userManager.AddToRole(userASP.Id, "Admin");
+            }
+
+            // Verifica si el usuario existe en la tabla Users
+            using (var dbContext = new PortalCiudadanoContext())
+            {
+                var existingUser = dbContext.Users.FirstOrDefault(u => u.UserName == email);
+                if (existingUser == null)
+                {
+                    var newUser = new User
+                    {
+                        UserName = email,
+                        Nombres = nombres,
+                        Apellidos = apellidos,
+                        Cedula = cedula,
+                    };
+
+                    dbContext.Users.Add(newUser);
+                    dbContext.SaveChanges();
+                }
+            }
         }
+
         //public static void CreateUserASP(string email, string roleName)
         //{
         //    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));

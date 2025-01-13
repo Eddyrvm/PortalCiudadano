@@ -5,19 +5,24 @@
     {
         @Html.AntiForgeryToken()
 
+        <style>
+            .dropdown-toggle::after {
+                color: white !important; /* Cambia la flecha a blanco */
+            }
+        </style>
         <ul class="navbar-nav navbar-right">
-            @if (Session["Foto"] != null)
+            @if (Session["UsuarioLogin"] != null) // Asegurarse de que el usuario esté logueado
             {
+
                 <li class="nav-item dropdown" style="color:white">
                     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="@Url.Content(Session["Foto"].ToString())"
+                        <img src="@Url.Content(Session["Foto"] != null ? Session["Foto"].ToString() : "~/Content/Imagenes/no-user.png")"
                              style="width:39px; height:39px; border-radius: 50%; object-fit: cover; margin-right: 10px; border: 2px solid white;" />
                         <strong style="color:white">@Session["UsuarioLogin"].ToString()</strong>
                     </a>
                     <ul class="dropdown-menu text-small shadow">
                         <li><a class="dropdown-item" href="@Url.Action("DetailsUser", "Users")">Ver Perfil</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ChangePassword", "Manage")">Cambiar contraseña</a></li>
-                        @*<li><a class="dropdown-item" href="#">Profile</a></li>*@
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
@@ -29,6 +34,7 @@
                     </ul>
                 </li>
             }
+
         </ul>
     }
 }

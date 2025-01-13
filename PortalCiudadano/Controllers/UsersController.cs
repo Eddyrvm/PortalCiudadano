@@ -156,24 +156,14 @@ namespace PortalCiudadano.Controllers
 
         //[Authorize(Roles = "Admin")]
         // GET: Users/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            if (string.IsNullOrEmpty(id))
+            if (id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            int decodedId;
-            try
-            {
-                decodedId = EncriptId.DecodeId(id);
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            User user = db.Users.Find(decodedId);
+            User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -182,34 +172,18 @@ namespace PortalCiudadano.Controllers
             return View(user);
         }
 
-
-        //[Authorize(Roles = "Editar, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(User user, string EncodedId)
+        // [Authorize(Roles = "Editar, Admin")]
+        public ActionResult Edit(User user)
         {
-            // Validar que el EncodedId no sea nulo o vacío
-            if (string.IsNullOrEmpty(EncodedId))
+            if (user == null || user.Id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            int decodedId;
-            try
-            {
-                // Decodificar la ID
-                decodedId = EncriptId.DecodeId(EncodedId);
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            // Asignar el valor decodificado a user.Id manualmente
-            user.Id = decodedId;
-
-            // Validar que la ID decodificada coincida con un usuario existente
-            User currentUser = db.Users.Find(decodedId);
+            // Validar que la ID coincida con un usuario existente
+            User currentUser = db.Users.Find(user.Id);
             if (currentUser == null)
             {
                 return HttpNotFound();
@@ -219,9 +193,6 @@ namespace PortalCiudadano.Controllers
             ModelState.Remove("Password");
             ModelState.Remove("ConfirmPassword");
 
-            // Evitar que la ID codificada cause problemas en la validación
-            ModelState.Remove("Id");
-
             if (!ModelState.IsValid)
             {
                 // Opcional: Registrar errores para depuración
@@ -230,7 +201,6 @@ namespace PortalCiudadano.Controllers
                 {
                     Console.WriteLine(error.ErrorMessage);
                 }
-                ViewBag.EncodedId = EncodedId; // Pasar EncodedId a la vista
                 return View(user);
             }
 
@@ -238,7 +208,7 @@ namespace PortalCiudadano.Controllers
             if (user.FotoFile != null)
             {
                 var folder = "~/Content/Users";
-                var file = string.Format("{0}.jpg", decodedId); // Usamos la ID decodificada
+                var file = string.Format("{0}.jpg", user.Id); // Usamos la ID directamente
                 var response = FileHelper.UploadPhoto(user.FotoFile, folder, file);
                 if (response)
                 {
@@ -265,7 +235,7 @@ namespace PortalCiudadano.Controllers
             {
                 if (ex.InnerException?.InnerException?.Message.Contains("_Index") == true)
                 {
-                    ModelState.AddModelError(string.Empty, "El registro ya existe en la base de datos");
+                    ModelState.AddModelError(string.Empty, "El registro ya existe en la base de datos.");
                 }
                 else
                 {
@@ -273,10 +243,9 @@ namespace PortalCiudadano.Controllers
                 }
             }
 
-            // Asegurarse de que el EncodedId se pase nuevamente a la vista
-            ViewBag.EncodedId = EncodedId; // Pasar el EncodedId por ViewBag si es necesario
             return View(user);
         }
+
 
 
 
@@ -296,14 +265,14 @@ namespace PortalCiudadano.Controllers
             return View(user);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
-            //db.Users.Remove(user);
-            //db.SaveChanges();
+            db.Users.Remove(user);
+            db.SaveChanges();
             UsersHelper.DeleteUser(user.UserName, "Ver");
             return RedirectToAction("Index");
         }

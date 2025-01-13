@@ -194,8 +194,10 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ComponenteAPI.cs" />
     <Compile Include="ViewModels\PersonaAPI.cs" />
+    <Compile Include="ViewModels\RoleView.cs" />
     <Compile Include="ViewModels\RubroAPI.cs" />
     <Compile Include="ViewModels\TituloAPI.cs" />
+    <Compile Include="ViewModels\UserView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
