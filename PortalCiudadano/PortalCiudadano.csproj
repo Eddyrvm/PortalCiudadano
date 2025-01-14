@@ -282,6 +282,7 @@
     <Content Include="Views\SettingUsers\Index.cshtml" />
     <Content Include="Views\SettingUsers\Roles.cshtml" />
     <Content Include="Views\Users\EditUser.cshtml" />
+    <Content Include="Views\SettingUsers\_AddRolePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

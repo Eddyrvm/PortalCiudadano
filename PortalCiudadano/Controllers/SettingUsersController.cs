@@ -15,7 +15,7 @@ namespace PortalCiudadano.Controllers
         private PortalCiudadanoContext db2 = new PortalCiudadanoContext();
         // GET: Users
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
@@ -103,7 +103,7 @@ namespace PortalCiudadano.Controllers
             return View(userView);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddRole(string userId)
         {
             if (string.IsNullOrEmpty(userId))
@@ -112,8 +112,7 @@ namespace PortalCiudadano.Controllers
             }
 
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-            var users = userManager.Users.ToList();
-            var user = users.Find(u => u.Id == userId);
+            var user = userManager.Users.SingleOrDefault(u => u.Id == userId);
 
             if (user == null)
             {
@@ -128,16 +127,26 @@ namespace PortalCiudadano.Controllers
             };
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-            var List = roleManager.Roles.ToList();
-            List.Add(new IdentityRole { Id = "", Name = "[Seleccione un rol...]" });
-            List = List.OrderBy(r => r.Name).ToList();
-            ViewBag.RoleId = new SelectList(List, "Id", "Name");
+            var rolesList = roleManager.Roles.ToList();
+            rolesList.Add(new IdentityRole { Id = "", Name = "[Seleccione un rol...]" });
+            rolesList = rolesList.OrderBy(r => r.Name).ToList();
 
-            return View(userView);
+            ViewBag.RoleId = new SelectList(rolesList, "Id", "Name");
+
+            // Verificar si la solicitud es AJAX
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_AddRolePartial", userView); // Retorna la vista parcial
+            }
+
+            return View(userView); // Retorna la vista completa si no es AJAX
         }
 
+
+
+
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddRole(string userId, FormCollection form)
         {
             var roleId = Request["RoleId"];
@@ -156,12 +165,19 @@ namespace PortalCiudadano.Controllers
 
             if (string.IsNullOrEmpty(roleId))
             {
+
                 ViewBag.Error = "Debe seleccionar un rol";
                 var List = roleManager.Roles.ToList();
                 List.Add(new IdentityRole { Id = "", Name = "[Seleccione un rol...]" });
                 List = List.OrderBy(r => r.Name).ToList();
                 ViewBag.RoleId = new SelectList(List, "Id", "Name");
-                return View(userView);
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("_AddRolePartial", new UserView { UserId = userId });
+                }
+
+                // Si no es una solicitud AJAX, retornar la vista completa
+                return View(new UserView { UserId = userId });
 
             }
 
@@ -199,7 +215,7 @@ namespace PortalCiudadano.Controllers
 
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string userId, string roleId)
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(roleId))

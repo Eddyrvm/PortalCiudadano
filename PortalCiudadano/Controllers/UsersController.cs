@@ -201,6 +201,7 @@ namespace PortalCiudadano.Controllers
             return View(user); // Pasar el modelo del usuario a la vista
         }
 
+        [Authorize]
         public ActionResult EditUser()
         {
             // Verificar si TempData contiene la ID del usuario
@@ -222,6 +223,7 @@ namespace PortalCiudadano.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(User user)
         {
@@ -411,10 +413,20 @@ namespace PortalCiudadano.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                if (db != null)
+                {
+                    db.Dispose();
+                    db = null;
+                }
+
+                if (_identityContext != null)
+                {
+                    _identityContext.Dispose();
+                    _identityContext = null;
+                }
             }
+
             base.Dispose(disposing);
         }
-
     }
 }

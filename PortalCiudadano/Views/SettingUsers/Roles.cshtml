@@ -3,43 +3,119 @@
     ViewBag.Title = "Roles";
 }
 
-<h2>Administrar Roles del Usuario: @Model.NombreCompleto</h2>
+<h4><span class="text-secondary">Roles del Usuario:</span> @Model.NombreCompleto</h4>
+<h6><span class="text-secondary">@Model.EMail</span> </h6>
 <br />
 
 <p>
-    <a class="btn btn-primary btn-sm" title="" href="@Url.Action("Index", "SettingUsers")">
+    <a class="btn btn-primary" title="" href="@Url.Action("Index", "SettingUsers")">
         <span class="glyphicon glyphicon-arrow-left"></span> Volver a la Lista
     </a>
-    <a class="btn btn-success btn-sm" title="" href="@Url.Action("AddRole", "SettingUsers",new { userId = Model.UserId})">
-        <span class="glyphicon glyphicon-circle-arrow-up"></span> Asignar Rol
+    <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#rolesModal"
+       data-bs-url="@Url.Action("AddRole", "SettingUsers", new { userId = Model.UserId })">
+        <span class="glyphicon glyphicon-plus"></span> Agregar Rol
     </a>
-
 </p>
-<div class="panel panel-primary table-responsive active">
-    <table class="table table-hover table-responsive table-striped " id="My Table">
 
-        @for (int i = 0; i < Model.Roles.Count; i++)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.Roles[i].Name)
-                </td>
-                <td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a class="btn btn-danger btn-sm" title="EliminarRol" href="@Url.Action("Delete", "SettingUsers", new { userId = Model.UserId, roleId = Model.Roles[i].RoleId })">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-node-minus-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M16 8a5 5 0 0 1-9.975.5H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5h2.025A5 5 0 0 1 16 8m-2 0a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5A.5.5 0 0 0 14 8" />
-                            </svg> Quitar
-                        </a>
-                    }
-
-                </td>
-            </tr>
-        }
-    </table>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="card-title">
+                    <h5>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fd7e14" class="bi bi-toggles" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                            <path d="M4.5 9a3.5 3.5 0 1 0 0 7h7a3.5 3.5 0 1 0 0-7zm7 6a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m-7-14a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5m2.45 0A3.5 3.5 0 0 1 8 3.5 3.5 3.5 0 0 1 6.95 6h4.55a2.5 2.5 0 0 0 0-5zM4.5 0h7a3.5 3.5 0 1 1 0 7h-7a3.5 3.5 0 1 1 0-7" />
+                        </svg> Roles del Usuario
+                    </h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <tr class="alert-info info">
+                            <th>
+                                Role
+                            </th>
+                            <th>
+                                Acción
+                            </th>
+                        </tr>
+                        @for (int i = 0; i < Model.Roles.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model.Roles[i].Name)
+                                </td>
+                                <td>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a class="btn btn-danger btn-sm" title="EliminarRol" href="@Url.Action("Delete", "SettingUsers", new { userId = Model.UserId, roleId = Model.Roles[i].RoleId })">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-node-minus-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M16 8a5 5 0 0 1-9.975.5H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5h2.025A5 5 0 0 1 16 8m-2 0a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5A.5.5 0 0 0 14 8" />
+                                            </svg> Quitar
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="modal fade" id="rolesModal" tabindex="-1" aria-labelledby="rolesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="margin-top: 70px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="rolesModalLabel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#fd7e14" class="bi bi-key" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                        <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8m4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5" />
+                        <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                    </svg> Agregar Rol</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí se cargará dinámicamente el contenido de la vista -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rolesModal = document.getElementById("rolesModal");
+
+        rolesModal.addEventListener("show.bs.modal", function (event) {
+            const button = event.relatedTarget; // Botón que activó el modal
+            const url = button.getAttribute("data-bs-url"); // URL de la vista parcial
+
+            const modalBody = rolesModal.querySelector(".modal-body");
+
+            // Limpiar el contenido del modal
+            modalBody.innerHTML = "<p>Cargando...</p>";
+
+            // Realizar la solicitud AJAX para obtener la vista
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest' // Indica que es una solicitud AJAX
+                }
+            })
+                .then(response => response.text())
+                .then(html => {
+                    modalBody.innerHTML = html; // Insertar el contenido de la vista parcial en el modal
+                })
+                .catch(error => {
+                    modalBody.innerHTML = "<p>Error al cargar el contenido.</p>";
+                    console.error("Error al cargar la vista:", error);
+                });
+        });
+    });
+</script>
 
 
 
