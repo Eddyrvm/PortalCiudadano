@@ -26,3 +26,20 @@ function showWarningMessage(message) {
         confirmButtonText: 'Aceptar'
     });
 }
+
+function showConfirmationMessage(title, text, confirmText = 'Sí', cancelText = 'No', callback) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: confirmText,
+        cancelButtonText: cancelText
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback(); // Llama a la función de callback si el usuario confirma
+        }
+    });
+}

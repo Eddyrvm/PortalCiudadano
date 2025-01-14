@@ -14,6 +14,7 @@ namespace PortalCiudadano
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
@@ -26,6 +27,8 @@ namespace PortalCiudadano
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(10), // Tiempo de expiración de la cookie
+                SlidingExpiration = true, // Renueva el tiempo de expiración con cada solicitud
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
@@ -63,6 +66,7 @@ namespace PortalCiudadano
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
         }
     }
 }
