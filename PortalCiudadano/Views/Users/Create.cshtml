@@ -46,87 +46,87 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="row">
-        <!-- Card de Datos Personales -->
-        <div class="col-12 col-md-6">
-            <br />
-            <div class="card shadow">
-                <div class="card-body">
-                    <fieldset>
-                        <legend>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16" style="margin-bottom: 4px;">
-                                <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5z" />
-                            </svg> Datos Personales
-                        </legend>
+        <div class="row">
+            <!-- Card de Datos Personales -->
+            <div class="col-12 col-md-6">
+                <br />
+                <div class="card shadow">
+                    <div class="card-body">
+                        <fieldset>
+                            <legend>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5z" />
+                                </svg> Datos Personales
+                            </legend>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Cedula, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.Cedula, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Cedula, "", new { @class = "text-danger" })
-                        </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Cedula, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Cedula, new { htmlAttributes = new { @class = "form-control", @id = "Cedula", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.Cedula, "", new { @class = "text-danger" })
+                            </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
-                        </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", @id = "Nombres", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+                            </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
-                        </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", @id = "Apellidos", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                            </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-                        </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", @id = "Telefono", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="FotoFile" class="form-label">@Html.DisplayNameFor(model => model.FotoFile)</label>
-                            @Html.TextBoxFor(model => model.FotoFile, new { @class = "form-control", type = "file", id = "FotoFile" })
-                        </div>
-                    </fieldset>
+                            <div class="mb-3">
+                                <label for="FotoFile" class="form-label">@Html.DisplayNameFor(model => model.FotoFile)</label>
+                                @Html.TextBoxFor(model => model.FotoFile, new { @class = "form-control", type = "file", id = "FotoFile" })
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <!-- Card de Credenciales -->
+            <div class="col-12 col-md-6">
+                <br />
+                <div class="card shadow">
+                    <div class="card-body">
+                        <fieldset>
+                            <legend>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6f42c1" class="bi bi-file-earmark-lock2" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                                    <path d="M10 7v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V9.3c0-.627.46-1.058 1-1.224V7a2 2 0 1 1 4 0M7 7v1h2V7a1 1 0 0 0-2 0" />
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                </svg> Credenciales
+                            </legend>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "UserName", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Card de Credenciales -->
-        <div class="col-12 col-md-6">
-            <br />
-            <div class="card shadow">
-                <div class="card-body">
-                    <fieldset>
-                        <legend>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6f42c1" class="bi bi-file-earmark-lock2" viewBox="0 0 16 16" style="margin-bottom: 4px;">
-                                <path d="M10 7v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V9.3c0-.627.46-1.058 1-1.224V7a2 2 0 1 1 4 0M7 7v1h2V7a1 1 0 0 0-2 0" />
-                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
-                            </svg> Credenciales
-                        </legend>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
-                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
-        </div>
-    </div>
 
         <br />
         <div class="form-group">
@@ -241,4 +241,57 @@
         });
     });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#BuscarPersonaBtn').click(function () {
+                const identificador = $('#Identificador').val();
+
+                if (!identificador || isNaN(identificador)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Debe ingresar un número válido como identificador.'
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Users/GetPersona',
+                    type: 'GET',
+                    data: { identificador: identificador },
+                    success: function (response) {
+                        if (response) {
+                            // Llenar los campos con los datos recibidos
+                            $('#Cedula').val(response.identificador);
+                            $('#Nombres').val(response.natural_nombres);
+                            $('#Apellidos').val(response.natural_apellidos);
+                            $('#Telefono').val(response.telefono);
+                            $('#UserName').val(response.email);
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Persona encontrada',
+                                text: 'Los datos han sido cargados correctamente.'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'No encontrado',
+                                text: 'No se encontraron datos para el identificador proporcionado.'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ocurrió un problema al buscar la persona. Inténtelo nuevamente.'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
 }

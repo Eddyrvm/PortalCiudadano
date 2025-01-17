@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using PortalCiudadano.Clases;
+using PortalCiudadano.Helpers;
 using PortalCiudadano.Models;
 using PortalCiudadano.ViewModels;
 using System;
@@ -55,6 +56,44 @@ namespace PortalCiudadano.Controllers
                 JsonRequestBehavior.AllowGet);
             }
         }
+
+        public JsonResult GetPersona(string identificador)
+        {
+            var _servicioConsultaPersonas = new ServicioConsultaPersonas();
+            try
+            {
+                // Consumir el servicio y obtener los datos de la persona
+                var persona = _servicioConsultaPersonas.ObtenerPersonaPorIdentificador(identificador);
+
+                if (persona == null)
+                {
+                    return Json(null, JsonRequestBehavior.AllowGet);
+                }
+
+                // Mapear los datos de la API al modelo utilizado en la vista
+                var personaViewModel = new PersonaViewModelAPI
+                {
+                    IdPersona = persona.IdPersona,
+                    identificador = persona.identificador,
+                    direccion = persona.direccion,
+                    telefono = persona.telefono,
+                    email = persona.email,
+                    natural_nombres = persona.natural_nombres,
+                    natural_apellidos = persona.natural_apellidos
+                };
+
+                return Json(personaViewModel, JsonRequestBehavior.AllowGet);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { error = "Ocurrió un error inesperado." }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
