@@ -54,7 +54,7 @@
                     <div class="card-body">
                         <fieldset>
                             <legend>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#0dcaf0" class="bi bi-file-earmark-person" viewBox="0 0 16 16" style="margin-bottom: 4px;">
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5z" />
                                 </svg> Datos Personales
@@ -99,7 +99,7 @@
                     <div class="card-body">
                         <fieldset>
                             <legend>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6f42c1" class="bi bi-file-earmark-lock2" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#6f42c1" class="bi bi-file-earmark-lock2" viewBox="0 0 16 16" style="margin-bottom: 4px;">
                                     <path d="M10 7v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V9.3c0-.627.46-1.058 1-1.224V7a2 2 0 1 1 4 0M7 7v1h2V7a1 1 0 0 0-2 0" />
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
                                 </svg> Credenciales
@@ -113,13 +113,13 @@
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-                                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @type="password" })
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
-                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", @type = "password" })
                                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                             </div>
                         </fieldset>
@@ -131,18 +131,27 @@
         <br />
         <div class="form-group">
             <div class="text-center">
-                <a class="btn btn-primary" title="Volver al formulario" href="@Url.Action("Index", "Users")">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-backward-fill" viewBox="0 0 16 16">
-                        <path d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5" />
-                    </svg> Volver a la lista
-                </a>
-                <button type="submit" class="btn btn-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-wide-connected" viewBox="0 0 16 16">
-                        <path d="M7.068.727c.243-.97 1.62-.97 1.864 0l.071.286a.96.96 0 0 0 1.622.434l.205-.211c.695-.719 1.888-.03 1.613.931l-.08.284a.96.96 0 0 0 1.187 1.187l.283-.081c.96-.275 1.65.918.931 1.613l-.211.205a.96.96 0 0 0 .434 1.622l.286.071c.97.243.97 1.62 0 1.864l-.286.071a.96.96 0 0 0-.434 1.622l.211.205c.719.695.03 1.888-.931 1.613l-.284-.08a.96.96 0 0 0-1.187 1.187l.081.283c.275.96-.918 1.65-1.613.931l-.205-.211a.96.96 0 0 0-1.622.434l-.071.286c-.243.97-1.62.97-1.864 0l-.071-.286a.96.96 0 0 0-1.622-.434l-.205.211c-.695.719-1.888.03-1.613-.931l.08-.284a.96.96 0 0 0-1.187-1.187l-.283.081c-.96.275-1.65-.918-.931-1.613l.211-.205a.96.96 0 0 0-.434-1.622l-.286-.071c-.97-.243-.97-1.62 0-1.864l.286-.071a.96.96 0 0 0 .434-1.622l-.211-.205c-.719-.695-.03-1.888.931-1.613l.284.08a.96.96 0 0 0 1.187-1.187l-.081-.283c-.275-.96.918-1.65 1.613-.931l.205.211a.96.96 0 0 0 1.622-.434l.071-.286zM6.5 10.5a4 4 0 1 0 0-5 4 4 0 0 0 0 5z" />
-                        <path d="M8.5 5.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                    </svg> Guardar cambios
-                </button>
-            </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-secondary mb-1" title="Volver al formulario" href="@Url.Action("Index", "Users")">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                            <path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.7 8.7 0 0 0-1.921-.306 7 7 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254l-.042-.028a.147.147 0 0 1 0-.252l.042-.028zM7.8 10.386q.103 0 .223.006c.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96z" />
+                        </svg> Volver a la lista
+                    </a>
+                }
+                    <a class="btn btn-danger mb-1" title="Volver al formulario" href="@Url.Action("Index", "Home")">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                        </svg> Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5" />
+                        </svg> Registrar usuario en el sistema
+                    </button>
+                </div>
         </div>
     </div>
 }
@@ -150,33 +159,40 @@
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-    $(document).ready(function () {
-        $('#BuscarPersonaBtn').click(function () {
-            var identificador = $('#Identificador').val();
-            var url = '@Url.Action("BuscarPersonaPorIdentificador")';
+        $(document).ready(function () {
+            $('#BuscarPersonaBtn').click(function () {
+                const identificador = $('#Identificador').val();
+                const urlDeudas = '@Url.Action("BuscarPersonaPorIdentificador")';
+                const urlPersona = '/Users/GetPersona';
 
-            if (identificador) {
+                if (!identificador || isNaN(identificador)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Debe ingresar un número válido de cédula o RUC.'
+                    });
+                    return;
+                }
+
                 // Mostrar el spinner y ocultar el botón de búsqueda
                 $('#SpinnerButton').removeClass('d-none');
                 $('#BuscarPersonaBtn').addClass('d-none');
 
+                // Primer script: Buscar deudas
                 $.ajax({
-                    url: url,
+                    url: urlDeudas,
                     type: 'GET',
                     data: { identificador: identificador },
                     success: function (response) {
-                        // Ocultar el spinner y mostrar el botón de búsqueda cuando la búsqueda se complete
-                        $('#SpinnerButton').addClass('d-none');
-                        $('#BuscarPersonaBtn').removeClass('d-none');
+                        let deudasPromise;
 
                         if (response.success) {
-                            // Mostrar mensaje sobre deudas o la falta de ellas
                             if (response.deudas && response.deudas.ListComp.length > 0) {
-                                var deudasInfo = `
+                                let deudasInfo = `
                                     <strong>Información de Deudas:</strong><br>
                                     <strong>Componentes:</strong>
                                 `;
-                                var totalValor = 0;
+                                let totalValor = 0;
                                 response.deudas.ListComp.forEach(function (comp) {
                                     totalValor += comp.Valor;
                                     deudasInfo += `
@@ -194,14 +210,14 @@
                                         <hr style="border: 1px solid #ccc;">
                                     </div>
                                 `;
-                                Swal.fire({
+                                deudasPromise = Swal.fire({
                                     title: 'El usuario posee valores pendientes.',
                                     html: deudasInfo,
                                     icon: 'info',
                                     confirmButtonText: 'Aceptar'
                                 });
                             } else {
-                                Swal.fire({
+                                deudasPromise = Swal.fire({
                                     title: 'Sin Deudas',
                                     text: "No se encontraron deudas para esta persona.",
                                     icon: 'info',
@@ -209,89 +225,74 @@
                                 });
                             }
                         } else {
-                            Swal.fire({
-                                title: 'Sin deuda',
+                            deudasPromise = Swal.fire({
+                                title: 'Sin Deuda',
                                 text: response.message,
-                                icon: 'Info',
+                                icon: 'info',
                                 confirmButtonText: 'Aceptar'
                             });
                         }
+
+                        // Esperar hasta que el usuario cierre el mensaje antes de continuar
+                        deudasPromise.then(() => {
+                            // Segundo script: Buscar persona
+                            $.ajax({
+                                url: urlPersona,
+                                type: 'GET',
+                                data: { identificador: identificador },
+                                success: function (response) {
+                                    if (response) {
+                                        // Llenar los campos con los datos recibidos
+                                        $('#Cedula').val(response.identificador);
+                                        $('#Nombres').val(response.natural_nombres);
+                                        $('#Apellidos').val(response.natural_apellidos);
+                                        $('#Telefono').val(response.telefono);
+                                        $('#UserName').val(response.email);
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Persona encontrada',
+                                            text: 'Los datos han sido cargados correctamente, por favor elige una contraseña y procede confirmando la contraseña'
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'No encontrado',
+                                            text: 'No se encontraron datos para el identificador proporcionado.'
+                                        });
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Ocurrió un problema al buscar la persona. Inténtelo nuevamente.'
+                                    });
+                                },
+                                complete: function () {
+                                    // Ocultar el spinner y mostrar el botón de búsqueda
+                                    $('#SpinnerButton').addClass('d-none');
+                                    $('#BuscarPersonaBtn').removeClass('d-none');
+                                }
+                            });
+                        });
                     },
                     error: function () {
-                        // Ocultar el spinner y mostrar el botón de búsqueda en caso de error
-                        $('#SpinnerButton').addClass('d-none');
-                        $('#BuscarPersonaBtn').removeClass('d-none');
-
                         Swal.fire({
                             title: 'Error',
                             text: "Ocurrió un error al buscar la persona.",
                             icon: 'error',
                             confirmButtonText: 'Aceptar'
                         });
-                    }
-                });
-            } else {
-                Swal.fire({
-                    title: 'Campo Requerido',
-                    text: "Por favor, ingrese un identificador.",
-                    icon: 'warning',
-                    confirmButtonText: 'Aceptar'
-                });
-            }
-        });
-    });
-    </script>
 
-    <script>
-        $(document).ready(function () {
-            $('#BuscarPersonaBtn').click(function () {
-                const identificador = $('#Identificador').val();
-
-                if (!identificador || isNaN(identificador)) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Debe ingresar un número válido como identificador.'
-                    });
-                    return;
-                }
-
-                $.ajax({
-                    url: '/Users/GetPersona',
-                    type: 'GET',
-                    data: { identificador: identificador },
-                    success: function (response) {
-                        if (response) {
-                            // Llenar los campos con los datos recibidos
-                            $('#Cedula').val(response.identificador);
-                            $('#Nombres').val(response.natural_nombres);
-                            $('#Apellidos').val(response.natural_apellidos);
-                            $('#Telefono').val(response.telefono);
-                            $('#UserName').val(response.email);
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Persona encontrada',
-                                text: 'Los datos han sido cargados correctamente.'
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'No encontrado',
-                                text: 'No se encontraron datos para el identificador proporcionado.'
-                            });
-                        }
-                    },
-                    error: function () {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Ocurrió un problema al buscar la persona. Inténtelo nuevamente.'
-                        });
+                        // Ocultar el spinner y mostrar el botón de búsqueda
+                        $('#SpinnerButton').addClass('d-none');
+                        $('#BuscarPersonaBtn').removeClass('d-none');
                     }
                 });
             });
         });
     </script>
-
 }
+
+

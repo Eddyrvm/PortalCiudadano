@@ -3,8 +3,6 @@ using PortalCiudadano.ViewModels;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace PortalCiudadano.Helpers
 {
@@ -29,7 +27,5 @@ namespace PortalCiudadano.Helpers
 
             return null;
         }
-
-
     }
 }

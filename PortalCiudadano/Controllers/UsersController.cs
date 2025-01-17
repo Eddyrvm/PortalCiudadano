@@ -94,7 +94,6 @@ namespace PortalCiudadano.Controllers
             }
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
