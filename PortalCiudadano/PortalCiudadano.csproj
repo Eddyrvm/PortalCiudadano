@@ -170,11 +170,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ServicioLimpezasController.cs" />
     <Compile Include="Controllers\SettingUsersController.cs" />
+    <Compile Include="Controllers\TipoServiciosController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CombosHelper.cs" />
     <Compile Include="Helpers\EncriptId.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\MailHelper.cs" />
@@ -190,6 +193,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PortalCiudadanoContext.cs" />
+    <Compile Include="Models\ServiciosPublicos\ServicioLimpeza.cs" />
+    <Compile Include="Models\ServiciosPublicos\TipoServicio.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -284,6 +289,16 @@
     <Content Include="Views\SettingUsers\Roles.cshtml" />
     <Content Include="Views\Users\EditUser.cshtml" />
     <Content Include="Views\SettingUsers\_AddRolePartial.cshtml" />
+    <Content Include="Views\TipoServicios\Create.cshtml" />
+    <Content Include="Views\TipoServicios\Delete.cshtml" />
+    <Content Include="Views\TipoServicios\Details.cshtml" />
+    <Content Include="Views\TipoServicios\Edit.cshtml" />
+    <Content Include="Views\TipoServicios\Index.cshtml" />
+    <Content Include="Views\ServicioLimpezas\Create.cshtml" />
+    <Content Include="Views\ServicioLimpezas\Delete.cshtml" />
+    <Content Include="Views\ServicioLimpezas\Details.cshtml" />
+    <Content Include="Views\ServicioLimpezas\Edit.cshtml" />
+    <Content Include="Views\ServicioLimpezas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

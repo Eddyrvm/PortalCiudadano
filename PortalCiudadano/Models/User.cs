@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PortalCiudadano.Models.ServiciosPublicos;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
@@ -70,5 +72,7 @@ namespace PortalCiudadano.Models
         [Display(Name = "Foto Usuario")]
         [NotMapped]
         public HttpPostedFileBase FotoFile { get; set; }
+
+        public virtual ICollection<ServicioLimpeza> ServicioLimpieza { get; set; }
     }
 }

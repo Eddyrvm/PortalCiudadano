@@ -1,0 +1,98 @@
+﻿@model PortalCiudadano.Models.ServiciosPublicos.ServicioLimpeza
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ServicioLimpeza</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoServicio.NombreServicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoServicio.NombreServicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaSolicitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaSolicitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Institucion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Institucion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sector)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sector)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Referencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Referencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DetalleActividad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DetalleActividad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActividadRealizada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActividadRealizada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoSolicitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoSolicitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ServicioLimpezaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

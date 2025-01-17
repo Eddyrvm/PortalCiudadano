@@ -1,0 +1,26 @@
+﻿@model PortalCiudadano.Models.ServiciosPublicos.TipoServicio
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TipoServicio</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreServicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreServicio)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TipoServicioId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<PortalCiudadano.Models.ServiciosPublicos.ServicioLimpeza>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoServicio.NombreServicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaSolicitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Institucion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sector)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Calle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Referencia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DetalleActividad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActividadRealizada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoSolicitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonaId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoServicio.NombreServicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaSolicitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Institucion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sector)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Calle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Referencia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DetalleActividad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActividadRealizada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoSolicitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonaId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ServicioLimpezaId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ServicioLimpezaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ServicioLimpezaId })
+        </td>
+    </tr>
+}
+
+</table>

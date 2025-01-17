@@ -118,23 +118,6 @@ namespace PortalCiudadano.Clases
             }
         }
 
-        //public static void CreateUserASP(string email, string roleName)
-        //{
-        //    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
-        //    var userASP = userManager.FindByEmail(email);
-        //    if (userASP == null)
-        //    {
-        //        userASP = new ApplicationUser
-        //        {
-        //            Email = email,
-        //            UserName = email,
-        //        };
-
-        //        userManager.Create(userASP, email);
-        //    }
-        //    userManager.AddToRole(userASP.Id, roleName);
-        //}
-
         public static void CreateUserASPNuevo(string email, string password, string roleName)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
