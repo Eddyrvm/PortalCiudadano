@@ -1,0 +1,186 @@
+﻿@using PortalCiudadano.ViewModels
+@{
+    ViewBag.Title = "Deudas";
+    var personas = ViewBag.Personas as PersonasAPI;
+    var listComp = ViewBag.ListComp as List<ComponenteAPI>;
+    var listRubro = ViewBag.ListRubro as List<RubroAPI>;
+}
+
+<h4>
+    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="#6f42c1" class="bi bi-chat-square-dots" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+    </svg>
+    Consulta valores pendientes de pago:
+</h4>
+
+<form method="post" action="@Url.Action("ObtenerDeudas", "Deudas")">
+    <div>
+        <input type="text" id="valorB" name="valorB" class="form-control col-3" placeholder="Cédula o RUC" required oninvalid="this.setCustomValidity('Por favor, ingrese una cédula o RUC válido.')" oninput="this.setCustomValidity('')" />
+
+        <!-- Botón de envío de formulario -->
+        <button type="submit" id="SubmitButton" class="btn btn-primary mb-2 mt-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+            </svg>
+            Consultar
+        </button>
+
+        <!-- Spinner de tipo botón -->
+        <button id="SpinnerButton" class="btn btn-primary d-none mb-2 mt-2" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="visually-hidden">Loading...</span>
+        </button>
+
+        <a type="submit" class="btn btn-warning mb-2 mt-2" href="@Url.Action("Index", "Deudas")">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+            </svg>
+            Nueva Consulta
+        </a>
+    </div>
+</form>
+<br />
+@if (ViewBag.Message != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        Swal.fire({
+            icon: 'success',
+            title: 'Mensaje',
+            text: '@Html.Raw(HttpUtility.JavaScriptStringEncode(ViewBag.Message))',
+            confirmButtonText: 'Aceptar'
+        });
+    </script>
+
+    <div class="alert alert-warning">@ViewBag.Message</div>
+}
+
+<!-- Contenido condicional -->
+
+<div id="content" class="mt-2">
+    @if (personas != null || (listComp != null && listComp.Count > 0))
+    {
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        @if (personas != null)
+                        {
+                            <p class="card-title">
+                                <h4 class="text-black-50">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="#fd7e14" class="bi bi-file-person" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                                        <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                        <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                    </svg> Información del Contribuyente
+                                </h4>
+                            </p>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <small class="text-body-secondary"><strong>Nombres:</strong></small>
+                                    </div>
+                                    <span class="text-body-secondary">@personas.NombresApellidos</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <small class="text-body-secondary"><strong>Cédula:</strong></small>
+                                    </div>
+                                    <span class="text-body-secondary">@personas.Identificador</span>
+                                </li>
+                            </ul>
+
+                        }
+                    </div>
+                    <div class="col-md-5 col-lg-5 order-md-last">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16" style="margin-bottom: 4px;">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+                                </svg> Resumen valores
+                            </span>
+                        </h4>
+
+                        @if (listComp != null && listComp.Count > 0)
+                        {
+                            decimal totalValor = 0;
+                            <ul class="list-group mb-3">
+                                @foreach (var comp in listComp)
+                                {
+                                    totalValor += comp.Valor;
+                                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                                        <div>
+                                            <small class="text-body-secondary">@comp.NombreMiembro</small>
+                                        </div>
+                                        <span class="text-body-secondary">$ @comp.Valor.ToString("N2")</span>
+                                    </li>
+                                }
+                                <li class="list-group-item d-flex justify-content-between bg-success bg-opacity-10">
+                                    <span> <strong class="text-success">Total (USD)</strong></span>
+                                    <strong class="text-success">$ @totalValor.ToString("N2")</strong>
+                                </li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="text-secondary"> Para un mayor detalle referente a los valores reflejados usted debe de acercarse a las oficinas del GAD de Bolívar - Calceta</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var submitButton = document.getElementById("SubmitButton");
+                var spinnerButton = document.getElementById("SpinnerButton");
+
+                // Agrega un evento al botón de envío
+                submitButton.addEventListener("click", function () {
+                    // Oculta el botón de enviar y muestra el spinner
+                    submitButton.classList.add("d-none");
+                    spinnerButton.classList.remove("d-none");
+                });
+            });
+        </script>
+
+
+
+        @*@if (listRubro != null && listRubro.Count > 0)
+            {
+                var groupedRubros = listRubro.GroupBy(r => r.NombreRubro);
+
+                <h3>Rubros</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Rubro</th>
+                            <th>Valor</th>
+                            <th>Valor Total Interés</th>
+                            <th>Gastos Administrativos</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var group in groupedRubros)
+                        {
+                            foreach (var rubro in group)
+                            {
+                                <tr>
+                                    <td>@rubro.NombreRubro</td>
+                                    <td>@rubro.Valor</td>
+                                    <td>@rubro.ValorTotalInteres</td>
+                                    <td>@rubro.GastosAdministrativos</td>
+                                    <td>@rubro.Total</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }*@
+
+
