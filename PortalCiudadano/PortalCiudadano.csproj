@@ -292,7 +292,6 @@
     <Content Include="Views\SettingUsers\_AddRolePartial.cshtml" />
     <Content Include="Views\TipoServicios\Create.cshtml" />
     <Content Include="Views\TipoServicios\Delete.cshtml" />
-    <Content Include="Views\TipoServicios\Details.cshtml" />
     <Content Include="Views\TipoServicios\Edit.cshtml" />
     <Content Include="Views\TipoServicios\Index.cshtml" />
     <Content Include="Views\ServicioLimpezas\Create.cshtml" />

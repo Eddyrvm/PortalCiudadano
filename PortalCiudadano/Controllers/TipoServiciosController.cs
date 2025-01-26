@@ -16,20 +16,6 @@ namespace PortalCiudadano.Controllers
             return View(db.TipoServicios.ToList());
         }
 
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TipoServicio tipoServicio = db.TipoServicios.Find(id);
-            if (tipoServicio == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tipoServicio);
-        }
-
         public ActionResult Create()
         {
             return View();
@@ -55,7 +41,7 @@ namespace PortalCiudadano.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoServicio tipoServicio = db.TipoServicios.Find(id);
+            var tipoServicio = db.TipoServicios.Find(id);
             if (tipoServicio == null)
             {
                 return HttpNotFound();
@@ -82,7 +68,7 @@ namespace PortalCiudadano.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoServicio tipoServicio = db.TipoServicios.Find(id);
+            var tipoServicio = db.TipoServicios.Find(id);
             if (tipoServicio == null)
             {
                 return HttpNotFound();
@@ -94,7 +80,7 @@ namespace PortalCiudadano.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TipoServicio tipoServicio = db.TipoServicios.Find(id);
+            var tipoServicio = db.TipoServicios.Find(id);
             db.TipoServicios.Remove(tipoServicio);
             db.SaveChanges();
             return RedirectToAction("Index");
