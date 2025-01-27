@@ -1,8 +1,11 @@
-﻿using PortalCiudadano.Models;
+﻿using PortalCiudadano.Helpers;
+using PortalCiudadano.Models;
 using PortalCiudadano.Models.ServiciosPublicos;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace PortalCiudadano.Controllers
@@ -34,7 +37,7 @@ namespace PortalCiudadano.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.TipoServicioId = new SelectList(db.TipoServicios, "TipoServicioId", "NombreServicio");
+            ViewBag.TipoServicioId = new SelectList(CombosHelper.GetTipoServicios(), "TipoServicioId", "NombreServicio");
             return View();
         }
 
@@ -42,6 +45,7 @@ namespace PortalCiudadano.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ServicioLimpeza servicioLimpeza)
         {
+            servicioLimpeza.FechaSolicitud = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.ServicioLimpezas.Add(servicioLimpeza);
@@ -49,7 +53,7 @@ namespace PortalCiudadano.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TipoServicioId = new SelectList(db.TipoServicios, "TipoServicioId", "NombreServicio", servicioLimpeza.TipoServicioId);
+            ViewBag.TipoServicioId = new SelectList(CombosHelper.GetTipoServicios(), "TipoServicioId", "NombreServicio");
             return View(servicioLimpeza);
         }
 
@@ -64,7 +68,7 @@ namespace PortalCiudadano.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TipoServicioId = new SelectList(db.TipoServicios, "TipoServicioId", "NombreServicio", servicioLimpeza.TipoServicioId);
+            ViewBag.TipoServicioId = new SelectList(CombosHelper.GetTipoServicios(), "TipoServicioId", "NombreServicio");
             return View(servicioLimpeza);
         }
 
@@ -78,7 +82,7 @@ namespace PortalCiudadano.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TipoServicioId = new SelectList(db.TipoServicios, "TipoServicioId", "NombreServicio", servicioLimpeza.TipoServicioId);
+            ViewBag.TipoServicioId = new SelectList(CombosHelper.GetTipoServicios(), "TipoServicioId", "NombreServicio");
             return View(servicioLimpeza);
         }
 

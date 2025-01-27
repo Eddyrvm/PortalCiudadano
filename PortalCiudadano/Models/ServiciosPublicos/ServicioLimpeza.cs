@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace PortalCiudadano.Models.ServiciosPublicos
 {
@@ -21,11 +23,6 @@ namespace PortalCiudadano.Models.ServiciosPublicos
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [MaxLength(250, ErrorMessage = "El campo {0} no puede tener mas de {1} caracteres")]
-        [Display(Name = "Sector")]
-        public string Sector { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es requerido")]
-        [MaxLength(250, ErrorMessage = "El campo {0} no puede tener mas de {1} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Calle(donde solicita)")]
         public string Calle { get; set; }
@@ -41,6 +38,14 @@ namespace PortalCiudadano.Models.ServiciosPublicos
         [Display(Name = "Detalle una descripción breve de su solicitud")]
         public string DetalleActividad { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(15, ErrorMessage = "El {0} debe tener un máximo de {1} caracteres.")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\+?\d{1,4}?[ -]?\(?\d{1,3}?\)?[ -]?\d{1,4}[ -]?\d{1,4}[ -]?\d{1,9}$", ErrorMessage = "El {0} no tiene un formato válido.")]
+        [Display(Name = "Teléfono de contacto")]
+        public string Telefono { get; set; }
+
+
         [MaxLength(350, ErrorMessage = "El campo {0} no puede tener mas de {1} caracteres")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Detalle de la actividad realizada")]
@@ -48,6 +53,13 @@ namespace PortalCiudadano.Models.ServiciosPublicos
 
         [Display(Name = "Estado de Solicitud")]
         public string EstadoSolicitud { get; set; }
+
+        [DataType(DataType.ImageUrl)]
+        public string Foto { get; set; }
+
+        [Display(Name = "Agregar una foto (Opcional)")]
+        [NotMapped]
+        public HttpPostedFileBase FotoFile { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe de seleccionar un {0}")]
