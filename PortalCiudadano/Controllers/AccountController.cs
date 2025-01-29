@@ -30,7 +30,7 @@ namespace PortalCiudadano.Controllers
             var user = db.Users.Where(u => u.UserName == model.Email).FirstOrDefault();
             if (user != null)
             {
-                var users = db.Users.Find(user.Id);
+                var users = db.Users.Find(user.UserId);
                 if (users != null)
                 {
                     Session["Foto"] = users.Foto;

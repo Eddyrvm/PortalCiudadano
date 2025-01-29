@@ -13,6 +13,6 @@ namespace PortalCiudadano.Models.ServiciosPublicos
         [Display(Name = "Tipo de Servicio")]
         public string NombreServicio { get; set; }
 
-        public virtual ICollection<ServicioLimpeza> ServicioLimpieza { get; set; }
+        public virtual ICollection<ServicioLimpeza> ServicioLimpiezas { get; set; }
     }
 }

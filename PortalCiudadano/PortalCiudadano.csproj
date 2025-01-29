@@ -193,6 +193,10 @@
     <Compile Include="Migrations\202501270348133_NombreDeLaMigracion.Designer.cs">
       <DependentUpon>202501270348133_NombreDeLaMigracion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501291839029_cambio Id user.cs" />
+    <Compile Include="Migrations\202501291839029_cambio Id user.Designer.cs">
+      <DependentUpon>202501291839029_cambio Id user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -344,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501270348133_NombreDeLaMigracion.resx">
       <DependentUpon>202501270348133_NombreDeLaMigracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501291839029_cambio Id user.resx">
+      <DependentUpon>202501291839029_cambio Id user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

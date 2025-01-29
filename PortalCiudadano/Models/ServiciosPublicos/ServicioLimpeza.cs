@@ -64,7 +64,7 @@ namespace PortalCiudadano.Models.ServiciosPublicos
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe de seleccionar un {0}")]
         [Display(Name = "Persona")]
-        public int PersonaId { get; set; }
+        public int UserId { get; set; }
         public virtual User User { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido")]

@@ -11,7 +11,7 @@ namespace PortalCiudadano.Models
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido..")]
         [MaxLength(256, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
@@ -73,6 +73,6 @@ namespace PortalCiudadano.Models
         [NotMapped]
         public HttpPostedFileBase FotoFile { get; set; }
 
-        public virtual ICollection<ServicioLimpeza> ServicioLimpieza { get; set; }
+        public virtual ICollection<ServicioLimpeza> ServicioLimpiezas { get; set; }
     }
 }

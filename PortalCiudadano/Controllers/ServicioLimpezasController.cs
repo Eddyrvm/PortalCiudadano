@@ -16,8 +16,11 @@ namespace PortalCiudadano.Controllers
         // GET: ServicioLimpezas
         public ActionResult Index()
         {
-            var servicioLimpezas = db.ServicioLimpezas.Include(s => s.TipoServicio);
+            var servicioLimpezas = db.ServicioLimpezas
+                .Include(s => s.User)
+                .Include(s => s.TipoServicio);
             return View(servicioLimpezas.ToList());
+
         }
 
         public ActionResult Details(int? id)
@@ -53,7 +56,7 @@ namespace PortalCiudadano.Controllers
             if (usuario != null)
             {
                 // Asignar el Id del usuario al modelo
-                servicioLimpeza.PersonaId = usuario.Id;
+                servicioLimpeza.UserId = usuario.UserId;
             }
             else
             {
@@ -67,7 +70,7 @@ namespace PortalCiudadano.Controllers
             // Asignar la fecha actual
             servicioLimpeza.FechaSolicitud = DateTime.Now;
             ModelState.Remove("ActividadRealizada");
-            ModelState.Remove("PersonaId");
+            ModelState.Remove("UserId");
             if (ModelState.IsValid)
             {
                 db.ServicioLimpezas.Add(servicioLimpeza);

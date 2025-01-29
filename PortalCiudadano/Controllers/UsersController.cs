@@ -119,7 +119,7 @@ namespace PortalCiudadano.Controllers
                     if (user.FotoFile != null)
                     {
                         var folder = "~/Content/Users";
-                        var file = string.Format("{0}.jpg", user.Id);
+                        var file = string.Format("{0}.jpg", user.UserId);
                         var response = FileHelper.UploadPhoto(user.FotoFile, folder, file);
                         if (response)
                         {
@@ -181,7 +181,7 @@ namespace PortalCiudadano.Controllers
             }
 
             // Busca el usuario en el contexto principal
-            var user = db.Users.FirstOrDefault(u => u.Id == userId);
+            var user = db.Users.FirstOrDefault(u => u.UserId == userId);
             if (user == null)
             {
                 return HttpNotFound("No se encontró el usuario en el sistema.");
@@ -234,7 +234,7 @@ namespace PortalCiudadano.Controllers
             }
 
             // Guardar la ID del usuario en TempData
-            TempData["UserId"] = user.Id;
+            TempData["UserId"] = user.UserId;
 
             return View(user); // Pasar el modelo del usuario a la vista
         }
@@ -251,7 +251,7 @@ namespace PortalCiudadano.Controllers
             int userId = (int)TempData["UserId"];
 
             // Buscar el usuario en la base de datos utilizando la ID
-            var user = db.Users.FirstOrDefault(u => u.Id == userId);
+            var user = db.Users.FirstOrDefault(u => u.UserId == userId);
             if (user == null)
             {
                 return HttpNotFound("Usuario no encontrado");
@@ -266,7 +266,7 @@ namespace PortalCiudadano.Controllers
         public ActionResult EditUser(User user)
         {
             // Validar que la ID coincida con un usuario existente
-            var currentUser = db.Users.Find(user.Id);
+            var currentUser = db.Users.Find(user.UserId);
             if (currentUser == null)
             {
                 return HttpNotFound();
@@ -291,7 +291,7 @@ namespace PortalCiudadano.Controllers
             if (user.FotoFile != null)
             {
                 var folder = "~/Content/Users";
-                var file = string.Format("{0}.jpg", user.Id); // Usamos la ID directamente
+                var file = string.Format("{0}.jpg", user.UserId); // Usamos la ID directamente
                 var response = FileHelper.UploadPhoto(user.FotoFile, folder, file);
                 if (response)
                 {
@@ -351,13 +351,13 @@ namespace PortalCiudadano.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(User user)
         {
-            if (user == null || user.Id <= 0)
+            if (user == null || user.UserId <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             // Validar que la ID coincida con un usuario existente
-            User currentUser = db.Users.Find(user.Id);
+            User currentUser = db.Users.Find(user.UserId);
             if (currentUser == null)
             {
                 return HttpNotFound();
@@ -382,7 +382,7 @@ namespace PortalCiudadano.Controllers
             if (user.FotoFile != null)
             {
                 var folder = "~/Content/Users";
-                var file = string.Format("{0}.jpg", user.Id); // Usamos la ID directamente
+                var file = string.Format("{0}.jpg", user.UserId); // Usamos la ID directamente
                 var response = FileHelper.UploadPhoto(user.FotoFile, folder, file);
                 if (response)
                 {
