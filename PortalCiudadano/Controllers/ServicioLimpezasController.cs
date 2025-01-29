@@ -1,4 +1,5 @@
-﻿using PortalCiudadano.Helpers;
+﻿using PortalCiudadano.Clases;
+using PortalCiudadano.Helpers;
 using PortalCiudadano.Models;
 using PortalCiudadano.Models.ServiciosPublicos;
 using System;
@@ -75,10 +76,23 @@ namespace PortalCiudadano.Controllers
             {
                 db.ServicioLimpezas.Add(servicioLimpeza);
                 db.SaveChanges();
+
+                if (servicioLimpeza.FotoFile != null)
+                {
+                    var folder = "~/Content/ServicioLimpieza";
+                    var file = string.Format("{0}.jpg", servicioLimpeza.ServicioLimpezaId);
+                    var response = FileHelper.UploadPhoto(servicioLimpeza.FotoFile, folder, file);
+                    if (response)
+                    {
+                        var pic = string.Format("{0}/{1}", folder, file);
+                        servicioLimpeza.Foto = pic;
+                        db.Entry(servicioLimpeza).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
                 return RedirectToAction("Index");
             }
 
-            // Cargar el ViewBag para el dropdown si el modelo no es válido
             ViewBag.TipoServicioId = new SelectList(CombosHelper.GetTipoServicios(), "TipoServicioId", "NombreServicio");
             return View(servicioLimpeza);
         }

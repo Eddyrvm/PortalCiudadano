@@ -312,8 +312,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Imagenes\" />
+    <Folder Include="Content\ServicioLimpieza\" />
     <Folder Include="Content\Users\" />
-    <Folder Include="Views\Personas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
