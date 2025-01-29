@@ -5,7 +5,6 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Web.Mvc;
 
 namespace PortalCiudadano.Controllers
@@ -45,7 +44,30 @@ namespace PortalCiudadano.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ServicioLimpeza servicioLimpeza)
         {
+            // Obtener el usuario autenticado
+            string loggedUserName = User.Identity.Name;
+
+            // Buscar al usuario en la tabla User por UserName
+            var usuario = db.Users.FirstOrDefault(u => u.UserName == loggedUserName);
+
+            if (usuario != null)
+            {
+                // Asignar el Id del usuario al modelo
+                servicioLimpeza.PersonaId = usuario.Id;
+            }
+            else
+            {
+                // Manejar el caso donde no se encuentra el usuario
+                ModelState.AddModelError("", "No se pudo encontrar el usuario autenticado.");
+            }
+
+            // Asignar el estado inicial de la solicitud
+            servicioLimpeza.EstadoSolicitud = "Pendiente";
+
+            // Asignar la fecha actual
             servicioLimpeza.FechaSolicitud = DateTime.Now;
+            ModelState.Remove("ActividadRealizada");
+            ModelState.Remove("PersonaId");
             if (ModelState.IsValid)
             {
                 db.ServicioLimpezas.Add(servicioLimpeza);
@@ -53,9 +75,12 @@ namespace PortalCiudadano.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Cargar el ViewBag para el dropdown si el modelo no es válido
             ViewBag.TipoServicioId = new SelectList(CombosHelper.GetTipoServicios(), "TipoServicioId", "NombreServicio");
             return View(servicioLimpeza);
         }
+
+
 
         public ActionResult Edit(int? id)
         {

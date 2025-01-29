@@ -4,78 +4,78 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoServicio.NombreServicio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaSolicitud)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Institucion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Calle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Referencia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DetalleActividad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActividadRealizada)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EstadoSolicitud)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonaId)
-        </th>
-        <th></th>
-    </tr>
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h5 class="card-title">Listado de Servicios de Limpieza</h5>
+            <p>
+                <a class="btn btn-success" title="Agregar un nuevo registro." href="@Url.Action("Create", "ServicioLimpezas")">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16" style="margin-bottom: 2px;">
+                        <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7" />
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z" />
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z" />
+                    </svg> Nuevo Solicitud
+                </a>
+            </p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.TipoServicio.NombreServicio)</th>
+                            <th>@Html.DisplayNameFor(model => model.FechaSolicitud)</th>
+                            <th>@Html.DisplayNameFor(model => model.EstadoSolicitud)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string collapseId = "collapse-" + item.ServicioLimpezaId;<!-- ID único para cada fila -->
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoServicio.NombreServicio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaSolicitud)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Institucion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Calle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Referencia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DetalleActividad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActividadRealizada)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EstadoSolicitud)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonaId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ServicioLimpezaId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ServicioLimpezaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ServicioLimpezaId })
-        </td>
-    </tr>
-}
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.TipoServicio.NombreServicio)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FechaSolicitud)</td>
+                                <td>
+                                    @if (item.EstadoSolicitud == "Pendiente")
+                                    {
+                                        <span class="badge text-bg-danger">Pendiente</span>
+                                    }
+                                    else if (item.EstadoSolicitud == "Atendido")
+                                    {
+                                        <span class="badge text-bg-warning">Atendido</span>
+                                    }
+                                    else if (item.EstadoSolicitud == "Resuelto")
+                                    {
+                                        <span class="badge text-bg-success">Resuelto</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId">
+                                        Ver más
+                                    </button>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ServicioLimpezaId }, new { @class = "btn btn-sm btn-warning" }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.ServicioLimpezaId }, new { @class = "btn btn-sm btn-info" }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ServicioLimpezaId }, new { @class = "btn btn-sm btn-danger" })
+                                </td>
+                            </tr>
+                            <tr class="collapse" id="@collapseId">
+                                <td colspan="4">
+                                    <div class="card card-body">
+                                        <p><strong>Institución:</strong> @Html.DisplayFor(modelItem => item.Institucion)</p>
+                                        <p><strong>Calle:</strong> @Html.DisplayFor(modelItem => item.Calle)</p>
+                                        <p><strong>Referencia:</strong> @Html.DisplayFor(modelItem => item.Referencia)</p>
+                                        <p><strong>Detalle Actividad:</strong> @Html.DisplayFor(modelItem => item.DetalleActividad)</p>
+                                        <p><strong>Actividad Realizada:</strong> @Html.DisplayFor(modelItem => item.ActividadRealizada)</p>
+                                        <p><strong>Persona ID:</strong> @Html.DisplayFor(modelItem => item.PersonaId)</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-</table>
