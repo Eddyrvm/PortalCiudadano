@@ -105,14 +105,24 @@ namespace PortalCiudadano.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var servicioLimpeza = db.ServicioLimpezas.Find(id);
             if (servicioLimpeza == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TipoServicioId = new SelectList(CombosHelper.GetTipoServicios(), "TipoServicioId", "NombreServicio");
+
+            ViewBag.TipoServicioId = new SelectList(db.TipoServicios, "TipoServicioId", "NombreServicio", servicioLimpeza.TipoServicioId);
+
+            var user = db.Users.Find(servicioLimpeza.UserId);
+            if (user != null)
+            {
+                ViewBag.FullName = user.FullName;
+            }
+
             return View(servicioLimpeza);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
