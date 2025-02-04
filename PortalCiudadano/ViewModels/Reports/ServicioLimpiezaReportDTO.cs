@@ -31,6 +31,8 @@ namespace PortalCiudadano.ViewModels.Reports
         public string correo { get; set; }
 
         public int TipoServicioId { get; set; }
+
+        public byte[] Foto { get; set; }
     }
 
 }

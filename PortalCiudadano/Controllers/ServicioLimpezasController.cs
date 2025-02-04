@@ -53,7 +53,8 @@ namespace PortalCiudadano.Controllers
 
                                        // Se calcula FullName en memoria
                                        FullName = $"{t.User.Apellidos} {t.User.Nombres}",
-                                       correo = t.User.UserName
+                                       correo = t.User.UserName,
+                                       Foto = (t.Foto != null) ? System.IO.File.ReadAllBytes(Server.MapPath(t.Foto)) : null
                                    })
                                    .ToList();  // Se ejecuta la consulta aquí
 
