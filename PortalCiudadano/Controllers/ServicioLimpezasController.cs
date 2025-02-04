@@ -1,9 +1,13 @@
-﻿using PortalCiudadano.Clases;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using PortalCiudadano.Clases;
 using PortalCiudadano.Helpers;
 using PortalCiudadano.Models;
 using PortalCiudadano.Models.ServiciosPublicos;
+using PortalCiudadano.ViewModels.Reports;
 using System;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -23,6 +27,47 @@ namespace PortalCiudadano.Controllers
             return View(servicioLimpezas.ToList());
 
         }
+
+        public ActionResult PrintServicioLimpiezas(int? Id)
+        {
+            var datosFiltrados = db.ServicioLimpezas
+                                   .Where(t => t.ServicioLimpezaId == Id)
+                                   .Include(t => t.TipoServicio)
+                                   .Include(t => t.User)
+                                   .AsEnumerable()  // Se ejecuta en memoria después de este punto
+                                   .Select(t => new ServicioLimpiezaReportDTO
+                                   {
+                                       ServicioLimpiezaId = t.ServicioLimpezaId,
+                                       FechaSolicitud = t.FechaSolicitud,
+                                       Institucion = t.Institucion,
+                                       Calle = t.Calle,
+                                       Referencia = t.Referencia,
+                                       DetalleActividad = t.DetalleActividad,
+                                       Telefono = t.Telefono,
+                                       ActividadRealizada = t.ActividadRealizada,
+                                       EstadoSolicitud = t.EstadoSolicitud,
+                                       TipoServicioId = t.TipoServicioId,
+
+                                       NombreTipoServicio = t.TipoServicio.NombreServicio,
+                                       UserId = t.UserId,
+
+                                       // Se calcula FullName en memoria
+                                       FullName = $"{t.User.Apellidos} {t.User.Nombres}",
+                                       correo = t.User.UserName
+                                   })
+                                   .ToList();  // Se ejecuta la consulta aquí
+
+            ReportDocument rpt = new ReportDocument();
+            string path = Server.MapPath("~/Reports/ServiciosPublicos/ServicioLimpiezas.rpt");
+            rpt.Load(path);
+
+            rpt.SetDataSource(datosFiltrados);
+
+            Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+            return File(stream, "application/pdf", "Reporte.pdf");
+        }
+
+
 
         public ActionResult Details(int? id)
         {
