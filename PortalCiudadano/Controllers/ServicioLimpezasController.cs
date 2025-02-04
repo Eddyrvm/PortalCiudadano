@@ -30,11 +30,27 @@ namespace PortalCiudadano.Controllers
 
         public ActionResult PrintServicioLimpiezas(int? Id)
         {
+            if (Id == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Id = Id;
+            return View();
+        }
+
+        public ActionResult GetServicioLimpiezaReport(int? Id)
+        {
+            if (Id == null)
+            {
+                return HttpNotFound();
+            }
+
             var datosFiltrados = db.ServicioLimpezas
                                    .Where(t => t.ServicioLimpezaId == Id)
                                    .Include(t => t.TipoServicio)
                                    .Include(t => t.User)
-                                   .AsEnumerable()  // Se ejecuta en memoria después de este punto
+                                   .AsEnumerable()
                                    .Select(t => new ServicioLimpiezaReportDTO
                                    {
                                        ServicioLimpiezaId = t.ServicioLimpezaId,
@@ -47,16 +63,14 @@ namespace PortalCiudadano.Controllers
                                        ActividadRealizada = t.ActividadRealizada,
                                        EstadoSolicitud = t.EstadoSolicitud,
                                        TipoServicioId = t.TipoServicioId,
-
                                        NombreTipoServicio = t.TipoServicio.NombreServicio,
                                        UserId = t.UserId,
-
-                                       // Se calcula FullName en memoria
                                        FullName = $"{t.User.Apellidos} {t.User.Nombres}",
                                        correo = t.User.UserName,
+                                       cedula = t.User.Cedula,
                                        Foto = (t.Foto != null) ? System.IO.File.ReadAllBytes(Server.MapPath(t.Foto)) : null
                                    })
-                                   .ToList();  // Se ejecuta la consulta aquí
+                                   .ToList();
 
             ReportDocument rpt = new ReportDocument();
             string path = Server.MapPath("~/Reports/ServiciosPublicos/ServicioLimpiezas.rpt");
@@ -65,9 +79,12 @@ namespace PortalCiudadano.Controllers
             rpt.SetDataSource(datosFiltrados);
 
             Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
-            return File(stream, "application/pdf", "Reporte.pdf");
-        }
 
+            // Establecer el encabezado Content-Disposition para mostrar en el iframe
+            Response.AppendHeader("Content-Disposition", "inline; filename=Reporte.pdf");
+
+            return File(stream, "application/pdf");
+        }
 
 
         public ActionResult Details(int? id)

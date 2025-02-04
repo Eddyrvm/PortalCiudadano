@@ -1,7 +1,39 @@
-﻿
-@{
-    ViewBag.Title = "PrintServicioLimpiezas";
+﻿@{
+    ViewBag.Title = "Reporte de Servicio de Limpieza";
 }
 
-<h2>PrintServicioLimpiezas</h2>
+<div class="text-center">
+    <h2>Reporte de Servicio de Limpieza</h2>
+</div>
+
+<div class="text-center">
+    <div id="loadingSpinner">
+        <p>Cargando reporte...</p>
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <iframe id="reportFrame" style="width:100%; height:600px; border:none; display:none;"></iframe>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var reportFrame = document.getElementById("reportFrame");
+        var loadingSpinner = document.getElementById("loadingSpinner");
+
+        // URL del reporte
+        var reportUrl = "/ServicioLimpezas/GetServicioLimpiezaReport/@ViewBag.Id";
+
+        // Cargar el reporte en el iframe
+        reportFrame.src = reportUrl;
+
+        reportFrame.onload = function () {
+            loadingSpinner.style.display = "none";
+            reportFrame.style.display = "block";
+        };
+    });
+</script>
+
+
 
