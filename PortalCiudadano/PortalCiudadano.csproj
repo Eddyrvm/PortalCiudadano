@@ -176,8 +176,10 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ServicioLimpezasController.cs" />
     <Compile Include="Controllers\SettingUsersController.cs" />
+    <Compile Include="Controllers\SolicitudGestionsController.cs" />
     <Compile Include="Controllers\TipoServiciosController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UsuarioSolicitasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -205,6 +207,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PortalCiudadanoContext.cs" />
+    <Compile Include="Models\PortalGestionDbContext.cs" />
+    <Compile Include="Models\PortalGestion\SolicitudGestion.cs" />
+    <Compile Include="Models\PortalGestion\UsuarioSolicita.cs" />
     <Compile Include="Models\ServiciosPublicos\ServicioLimpeza.cs" />
     <Compile Include="Models\ServiciosPublicos\TipoServicio.cs" />
     <Compile Include="Models\User.cs" />
@@ -319,6 +324,16 @@
     <Content Include="Views\ServicioLimpezas\Index.cshtml" />
     <Content Include="Views\Deudas\Index.cshtml" />
     <Content Include="Views\ServicioLimpezas\PrintServicioLimpiezas.cshtml" />
+    <Content Include="Views\UsuarioSolicitas\Create.cshtml" />
+    <Content Include="Views\UsuarioSolicitas\Delete.cshtml" />
+    <Content Include="Views\UsuarioSolicitas\Details.cshtml" />
+    <Content Include="Views\UsuarioSolicitas\Edit.cshtml" />
+    <Content Include="Views\UsuarioSolicitas\Index.cshtml" />
+    <Content Include="Views\SolicitudGestions\Create.cshtml" />
+    <Content Include="Views\SolicitudGestions\Delete.cshtml" />
+    <Content Include="Views\SolicitudGestions\Details.cshtml" />
+    <Content Include="Views\SolicitudGestions\Edit.cshtml" />
+    <Content Include="Views\SolicitudGestions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

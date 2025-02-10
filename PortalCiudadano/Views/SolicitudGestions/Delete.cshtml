@@ -1,0 +1,72 @@
+﻿@model PortalCiudadano.Models.PortalGestion.SolicitudGestion
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SolicitudGestion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioSolicita.Cedula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioSolicita.Cedula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaSolicitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaSolicitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SolicitudUsuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SolicitudUsuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.observaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.observaciones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Foto1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Foto1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Foto2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Foto2)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
