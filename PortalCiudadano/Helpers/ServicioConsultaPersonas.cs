@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PortalCiudadano.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 
@@ -27,5 +28,25 @@ namespace PortalCiudadano.Helpers
 
             return null;
         }
+
+        public List<PersonaViewModelAPI> ObtenerPersonasPorFiltro(string filtro)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = $"http://192.168.10.204:8181/api/Persona/buscar?filtro={filtro}";
+                var response = client.GetAsync(url).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var personas = JsonConvert.DeserializeObject<List<PersonaViewModelAPI>>(json);
+                    return personas ?? new List<PersonaViewModelAPI>(); // Si es null, retorna lista vacía.
+                }
+            }
+
+            return new List<PersonaViewModelAPI>(); // Si hay error, retorna lista vacía.
+        }
+
+
     }
 }
