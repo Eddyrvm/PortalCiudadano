@@ -1,4 +1,5 @@
 ﻿using PortalCiudadano.Models;
+using PortalCiudadano.Models.PortalGestion;
 using PortalCiudadano.Models.ServiciosPublicos;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace PortalCiudadano.Helpers
     public class CombosHelper : IDisposable
     {
         private static PortalCiudadanoContext db = new PortalCiudadanoContext();
+        private static PortalGestionDbContext db2 = new PortalGestionDbContext();
         public static List<TipoServicio> GetTipoServicios()
         {
             var tipoServicios = db.TipoServicios.ToList();
@@ -20,9 +22,21 @@ namespace PortalCiudadano.Helpers
             });
             return tipoServicios = tipoServicios.OrderBy(b => b.NombreServicio).ToList();
         }
+
+        public static List<UsuarioSolicita> GetUsuarioSolicita()
+        {
+            var usuarioSolicita = db2.UsuarioSolicitas.ToList();
+            usuarioSolicita.Add(new UsuarioSolicita
+            {
+                UsuarioSolicitaId = 0,
+                Apellidos = "[Seleccione Solicitante...]",
+            });
+            return usuarioSolicita.OrderBy(u => u.FullName).ToList();
+        }
         public void Dispose()
         {
             db.Dispose();
+            db2.Dispose();
         }
     }
 }

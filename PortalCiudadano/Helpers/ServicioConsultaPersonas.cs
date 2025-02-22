@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PortalCiudadano.Helpers
 {
@@ -31,21 +32,44 @@ namespace PortalCiudadano.Helpers
 
         public List<PersonaViewModelAPI> ObtenerPersonasPorFiltro(string filtro)
         {
-            using (var client = new HttpClient())
+            try
             {
-                var url = $"http://192.168.10.204:8181/api/Persona/buscar?filtro={filtro}";
-                var response = client.GetAsync(url).Result;
-
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
+                    var url = $"http://192.168.10.204:8181/api/Persona/buscar?filtro={filtro}";
+                    var response = client.GetAsync(url).Result;
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        if (response.StatusCode == HttpStatusCode.BadRequest)
+                        {
+                            throw new ArgumentException("El filtro ingresado no es válido.");
+                        }
+                        else
+                        {
+                            throw new Exception("Error al obtener los datos. La API respondió con un estado no exitoso.");
+                        }
+                    }
+
                     var json = response.Content.ReadAsStringAsync().Result;
                     var personas = JsonConvert.DeserializeObject<List<PersonaViewModelAPI>>(json);
-                    return personas ?? new List<PersonaViewModelAPI>(); // Si es null, retorna lista vacía.
+                    return personas ?? new List<PersonaViewModelAPI>();
                 }
             }
-
-            return new List<PersonaViewModelAPI>(); // Si hay error, retorna lista vacía.
+            catch (HttpRequestException)
+            {
+                throw new Exception("No se pudo conectar con el servidor. Verifique su conexión.");
+            }
+            catch (TaskCanceledException)
+            {
+                throw new Exception("La solicitud tardó demasiado en responder. Intente nuevamente.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado: {ex.Message}");
+            }
         }
+
 
 
     }
