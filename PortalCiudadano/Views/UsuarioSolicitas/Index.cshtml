@@ -4,42 +4,38 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="card shadow-lg">
+    <div class="card-header">
+        <h5 class="card-title">Lista de Usuarios</h5>
+    </div>
+    <div class="card-body">
+        <p>
+            @Html.ActionLink("Nuevo", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Cedula)</th>
+                    <th>@Html.DisplayNameFor(model => model.Nombres)</th>
+                    <th>@Html.DisplayNameFor(model => model.Apellidos)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Cedula)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Apellidos)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.UsuarioSolicitaId }, new { @class = "btn btn-warning btn-sm" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.UsuarioSolicitaId }, new { @class = "btn btn-danger btn-sm" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Cedula)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Apellidos)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cedula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Apellidos)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UsuarioSolicitaId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UsuarioSolicitaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UsuarioSolicitaId })
-        </td>
-    </tr>
-}
-
-</table>

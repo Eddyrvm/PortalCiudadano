@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System;
 
 namespace PortalCiudadano.Controllers
 {
@@ -17,11 +18,80 @@ namespace PortalCiudadano.Controllers
         private ApplicationDbContext identityContext = new ApplicationDbContext();
 
         // GET: SolicitudGestions
-        public ActionResult Index()
+        public ActionResult Index(string search, string direccion)
         {
+            // Obtenemos todos los registros, incluyendo la relación UsuarioSolicita.
             var solicitudGestions = db.SolicitudGestions.Include(s => s.UsuarioSolicita);
+
+            if (!string.IsNullOrEmpty(direccion))
+            {
+                var resultados = db.SolicitudGestions
+                                   .Include(s => s.UsuarioSolicita)
+                                   .Where(s => s.DireccionFuncionario == direccion)
+                                   .OrderByDescending(s => s.FechaSolicitud)
+                                   .ToList();
+
+                // Se retorna la vista Index con la lista filtrada.
+                return View(resultados.ToList());
+            }
+
+            // Si se envía una búsqueda con al menos 3 caracteres, filtramos y limitamos a 50.
+            if (!string.IsNullOrEmpty(search) && search.Length >= 3)
+            {
+                solicitudGestions = solicitudGestions.Where(s =>
+                    s.UsuarioSolicita.Cedula.Contains(search) ||
+                    s.UsuarioSolicita.Apellidos.Contains(search) ||
+                    s.UsuarioSolicita.Nombres.Contains(search))
+                    .Take(50);
+            }
+
+            // Si es una petición AJAX, retornamos JSON con la lista de registros.
+            if (Request.IsAjaxRequest())
+            {
+                // Traemos los datos a memoria para poder acceder a FullName sin problemas.
+                var data = solicitudGestions.AsEnumerable().Select(s => new
+                {
+                    s.SolicitudId,
+                    s.UsuarioSolicita.Cedula,
+                    UsuarioSolicita = s.UsuarioSolicita.FullName, // Ahora se puede acceder sin problemas.
+                    FechaSolicitud = s.FechaSolicitud.ToString("yyyy-MM-dd"),
+                    s.SolicitudUsuario,
+                    Observaciones = s.observaciones,
+                    s.QuienRegistraGestion,
+                    s.DireccionFuncionario,
+                    Foto1 = string.IsNullOrEmpty(s.Foto1) ? null : Url.Content(s.Foto1),
+                    Foto2 = string.IsNullOrEmpty(s.Foto2) ? null : Url.Content(s.Foto2)
+                }).ToList();
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+
+            // Si no es una petición AJAX, retornamos la vista completa.
             return View(solicitudGestions.ToList());
         }
+
+        public ActionResult FiltrarPorDireccion(string direccion)
+        {
+            // Si no se especifica dirección, retornamos la vista con todos los registros.
+            if (string.IsNullOrEmpty(direccion))
+            {
+                return View("Index", db.SolicitudGestions
+                    .Include(s => s.UsuarioSolicita)
+                    .OrderByDescending(s => s.FechaSolicitud)
+                    .ToList());
+            }
+
+            // Consulta en LINQ que une SolicitudGestions con UsuarioSolicitas y filtra por DireccionFuncionario.
+            var resultados = db.SolicitudGestions
+                .Include(s => s.UsuarioSolicita)
+                .Where(s => s.DireccionFuncionario == direccion)
+                .OrderByDescending(s => s.FechaSolicitud)
+                .ToList();
+
+            // Se retorna la vista Index con la lista filtrada.
+            return View("Index", resultados);
+        }
+
 
         // GET: SolicitudGestions/Details/5
         public ActionResult Details(int? id)
@@ -51,8 +121,6 @@ namespace PortalCiudadano.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Usamos un contexto de identidad (si ya tienes uno, por ejemplo ApplicationDbContext)
-                // Usar un contexto de identidad separado para obtener la información del usuario.
                 using (var identityContext = new ApplicationDbContext())
                 {
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(identityContext));
@@ -111,7 +179,6 @@ namespace PortalCiudadano.Controllers
             return View(solicitudGestion);
         }
 
-
         // GET: SolicitudGestions/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -124,7 +191,7 @@ namespace PortalCiudadano.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UsuarioSolicitaId = new SelectList(CombosHelper.GetUsuarioSolicita(), "UsuarioSolicitaId", "Cedula", solicitudGestion.UsuarioSolicitaId);
+            ViewBag.UsuarioSolicitaId = new SelectList(CombosHelper.GetUsuarioSolicita(), "UsuarioSolicitaId", "FullName", solicitudGestion.UsuarioSolicitaId);
             return View(solicitudGestion);
         }
 
@@ -134,11 +201,47 @@ namespace PortalCiudadano.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Manejo de la primera imagen
+                if (solicitudGestion.FotoFile1 != null)
+                {
+                    var pic = string.Empty;
+                    var folder = "~/Content/SolicitudGestion";
+                    var file1 = string.Format("{0}_1.jpg", solicitudGestion.SolicitudId); // Usamos la ID y un sufijo para diferenciar
+                    var response1 = FileHelper.UploadPhoto(solicitudGestion.FotoFile1, folder, file1);
+                    if (response1)
+                    {
+                        pic = string.Format("{0}/{1}", folder, file1);
+                        solicitudGestion.Foto1 = pic;
+                    }
+                }
+
+                // Manejo de la segunda imagen
+                if (solicitudGestion.FotoFile12 != null)
+                {
+                    var pic = string.Empty;
+                    var folder = "~/Content/SolicitudGestion";
+                    var file2 = string.Format("{0}_2.jpg", solicitudGestion.SolicitudId); // Usamos la ID y un sufijo para diferenciar
+                    var response1 = FileHelper.UploadPhoto(solicitudGestion.FotoFile12, folder, file2);
+                    if (response1)
+                    {
+                        pic = string.Format("{0}/{1}", folder, file2);
+                        solicitudGestion.Foto2 = pic;
+                    }
+                }
+
                 db.Entry(solicitudGestion).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
             }
-            ViewBag.UsuarioSolicitaId = new SelectList(CombosHelper.GetUsuarioSolicita(), "UsuarioSolicitaId", "Cedula", solicitudGestion.UsuarioSolicitaId);
+
+            ViewBag.UsuarioSolicitaId = new SelectList(CombosHelper.GetUsuarioSolicita(), "UsuarioSolicitaId", "FullName", solicitudGestion.UsuarioSolicitaId);
             return View(solicitudGestion);
         }
 

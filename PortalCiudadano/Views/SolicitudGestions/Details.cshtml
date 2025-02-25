@@ -4,63 +4,53 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="card shadow-lg mx-auto" style="max-width: 600px;">
+    <div class="card-header text-center">
+        <h4>SolicitudGestion</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <!-- Columna de textos -->
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.UsuarioSolicita.Cedula)</dt>
+                    <dd>@Html.DisplayFor(model => model.UsuarioSolicita.Cedula)</dd>
 
-<div>
-    <h4>SolicitudGestion</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UsuarioSolicita.Cedula)
-        </dt>
+                    <dt>@Html.DisplayNameFor(model => model.FechaSolicitud)</dt>
+                    <dd>@Html.DisplayFor(model => model.FechaSolicitud)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UsuarioSolicita.Cedula)
-        </dd>
+                    <dt>@Html.DisplayNameFor(model => model.SolicitudUsuario)</dt>
+                    <dd>@Html.DisplayFor(model => model.SolicitudUsuario)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaSolicitud)
-        </dt>
+                    <dt>@Html.DisplayNameFor(model => model.observaciones)</dt>
+                    <dd>@Html.DisplayFor(model => model.observaciones)</dd>
+                </dl>
+            </div>
+            <!-- Columna de imágenes -->
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt><strong>Foto Actual 1:</strong></dt>
+                    <dd>
+                        @if (!string.IsNullOrEmpty(Model.Foto1))
+                        {
+                            <img src="@Url.Content(Model.Foto1)" alt="Imagen 1" class="img-thumbnail modal-img" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="@Url.Content(Model.Foto1)" style="max-width: 200px; height: auto; border-radius: 10%; object-fit: cover; cursor: pointer;" />
+                        }
+                    </dd>
+                    <dt><strong>Foto Actual 2:</strong></dt>
+                    <dd>
+                        @if (!string.IsNullOrEmpty(Model.Foto2))
+                        {
+                            <img src="@Url.Content(Model.Foto2)" alt="Imagen 2" class="img-thumbnail modal-img" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="@Url.Content(Model.Foto2)" style="max-width: 200px; height: auto; border-radius: 10%; object-fit: cover; cursor: pointer;" />
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.FechaSolicitud)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SolicitudUsuario)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SolicitudUsuario)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.observaciones)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.observaciones)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Foto1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Foto1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Foto2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Foto2)
-        </dd>
-
-    </dl>
+    <div class="card-footer text-center">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.SolicitudId }, new { @class = "btn btn-primary me-2" })
+        @Html.ActionLink("Volver a la lista", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SolicitudId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

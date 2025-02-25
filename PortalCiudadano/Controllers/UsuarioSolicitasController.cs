@@ -68,21 +68,6 @@ namespace PortalCiudadano.Controllers
             }
         }
 
-        // GET: UsuarioSolicitas/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var usuarioSolicita = db.UsuarioSolicitas.Find(id);
-            if (usuarioSolicita == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuarioSolicita);
-        }
-
         // GET: UsuarioSolicitas/Create
         public ActionResult Create()
         {
