@@ -1,0 +1,176 @@
+﻿@model IEnumerable<PortalCiudadano.Models.MapaSitios.MapSitio>
+
+@{
+    ViewBag.Title = "Coordenadas";
+}
+
+<div id="map" style="width: 100%; height: 75vh; max-width: 1200px; margin-left: 0;"></div>
+
+@*<table class="table">
+        <thead>
+            <tr>
+                <th>Latitud</th>
+                <th>Longitud</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Latitude</td>
+                    <td>@item.Longitude</td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<script>
+var map = L.map('map').setView([0, 0], 2);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+}).addTo(map);
+
+var coordinates = @Html.Raw(Json.Encode(Model));
+var bounds = L.latLngBounds();
+var userMarker = null;
+
+// Función para mostrar las coordenadas en el mapa
+function mostrarCoordenadas(coords) {
+    coords.forEach(function(coord) {
+        var marker = L.marker([coord.Latitude, coord.Longitude]).addTo(map);
+
+        var popupContent = `
+            <b>Lat:</b> ${coord.Latitude}<br>
+            <b>Lon:</b> ${coord.Longitude}<br>
+            <button onclick="traceRoute(${coord.Latitude}, ${coord.Longitude})"
+               style="display:inline-block; margin-top:5px; padding:5px 10px; background:#28a745; color:white; border:none; cursor:pointer; border-radius:5px;">
+               Ir
+            </button>
+            <button onclick="cargarDatos(${coord.Id})"
+               style="display:inline-block; margin-top:5px; margin-left:5px; padding:5px 10px; background:#007bff; color:white; border:none; cursor:pointer; border-radius:5px;">
+               Más
+            </button>
+        `;
+
+        marker.bindPopup(popupContent);
+        bounds.extend(marker.getLatLng());
+    });
+
+    if (coords.length > 0) {
+        map.fitBounds(bounds);
+    } else {
+        map.setView([0, 0], 2);
+    }
+}
+
+// Función para obtener la ubicación actual y mostrarla en el mapa
+function showCurrentLocation() {
+    getCurrentLocation(function (lat, lon) {
+        if (userMarker) {
+            userMarker.setLatLng([lat, lon]);
+        } else {
+            userMarker = L.marker([lat, lon]).addTo(map)
+                .bindPopup("Mi Ubicación").openPopup();
+        }
+        map.setView([lat, lon], 14);
+    });
+}
+
+function getCurrentLocation(callback) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                callback(position.coords.latitude, position.coords.longitude);
+            },
+            function () {
+                alert("No se pudo obtener la ubicación actual.");
+            }
+        );
+    } else {
+        alert("La geolocalización no es compatible con este navegador.");
+    }
+}
+
+// Función para llamar a la acción "CargarDatos"
+function cargarDatos(id) {
+    $.ajax({
+        url: "/Turismos/CargarDatos",
+        type: "GET",
+        data: { id: id },
+        success: function (response) {
+            alert("Datos cargados: " + response);
+        },
+        error: function () {
+            alert("Error al cargar datos.");
+        }
+    });
+}
+
+// Función para trazar la ruta con Google Maps
+function traceRoute(destLat, destLon) {
+    getCurrentLocation(function (currentLat, currentLon) {
+        window.open(`https://www.google.com/maps/dir/${currentLat},${currentLon}/${destLat},${destLon}/`, "_blank");
+    });
+}
+
+// Mostrar las coordenadas al cargar el mapa
+mostrarCoordenadas(coordinates);
+
+// Agregar menú de filtros en el mapa
+var categorias = ['Cafeterías', 'Parques', 'Museos'];
+
+var filterControl = L.control({ position: 'topright' });
+
+filterControl.onAdd = function () {
+    var div = L.DomUtil.create('div', 'leaflet-control leaflet-control-custom');
+    var select = '<select id="categoryFilter" style="padding:5px; width: 150px;">';
+    select += '<option value="all">Todas</option>';
+    categorias.forEach(function (cat) {
+        select += `<option value="${cat}">${cat}</option>`;
+    });
+    select += '</select>';
+    div.innerHTML = select;
+    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+    return div;
+};
+
+filterControl.addTo(map);
+
+// Agregar botón para mostrar ubicación
+var locationControl = L.control({ position: 'topright' });
+locationControl.onAdd = function () {
+    var div = L.DomUtil.create('div', 'leaflet-control leaflet-control-custom');
+    div.innerHTML = '<button onclick="showCurrentLocation()" style="padding:5px 10px; background:#dc3545; color:white; border:none; cursor:pointer; border-radius:5px;">Mi Ubicación</button>';
+    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+    return div;
+};
+locationControl.addTo(map);
+
+// Agregar botón de búsqueda en el mapa
+var searchControl = L.control({ position: 'topright' });
+searchControl.onAdd = function () {
+    var div = L.DomUtil.create('div', 'leaflet-control leaflet-control-custom');
+    div.innerHTML = '<input id="searchInput" type="text" placeholder="Buscar ubicación" style="padding:5px; width: 150px;">';
+    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+    return div;
+};
+searchControl.addTo(map);
+
+// Evento para mostrar mensaje al cambiar el filtro
+document.getElementById("categoryFilter").addEventListener("change", function () {
+    alert("Filtro seleccionado: " + this.value);
+});
+
+
+</script>
+
+
+
+
+

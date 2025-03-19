@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using PortalCiudadano.Models.MapaSitios;
+using PortalCiudadano.Models.PortalGestion;
+using System.Data.Entity;
 
 namespace PortalCiudadano.Models
 {
@@ -11,6 +13,6 @@ namespace PortalCiudadano.Models
 
         public System.Data.Entity.DbSet<PortalCiudadano.Models.PortalGestion.UsuarioSolicita> UsuarioSolicitas { get; set; }
 
-        public System.Data.Entity.DbSet<PortalCiudadano.Models.PortalGestion.SolicitudGestion> SolicitudGestions { get; set; }
+        public DbSet<SolicitudGestion> SolicitudGestions { get; set; }
     }
 }
