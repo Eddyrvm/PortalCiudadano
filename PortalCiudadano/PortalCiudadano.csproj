@@ -357,7 +357,6 @@
     <Content Include="Views\MapSitios\Index.cshtml" />
     <Content Include="Views\PersonaNaturales\Create.cshtml" />
     <Content Include="Views\PersonaNaturales\Delete.cshtml" />
-    <Content Include="Views\PersonaNaturales\Details.cshtml" />
     <Content Include="Views\PersonaNaturales\Edit.cshtml" />
     <Content Include="Views\PersonaNaturales\Index.cshtml" />
   </ItemGroup>

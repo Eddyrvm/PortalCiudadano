@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using PortalCiudadano.Models;
+﻿using PortalCiudadano.Models;
 using PortalCiudadano.Models.LiquidacionPatente;
+using System;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace PortalCiudadano.Controllers
 {
@@ -22,7 +18,6 @@ namespace PortalCiudadano.Controllers
             return View(await db.PersonaNaturales.ToListAsync());
         }
 
-        // GET: PersonaNaturales/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,13 +38,13 @@ namespace PortalCiudadano.Controllers
             return View();
         }
 
-        // POST: PersonaNaturales/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PersonaNaturalId,PersonaNaturalCedula,PersonaNaturalRUC,PersonaNaturalNombres,PersonaNaturalApellidos,DireccionContribuyente,TelefonoContribuyente,FaxContribuyente,CasillaContribuyente,ObligadoContabilidad,InicioActividad,CapitalPropio,FechaCreacion")] PersonaNatural personaNatural)
+        public async Task<ActionResult> Create(PersonaNatural personaNatural)
         {
+            personaNatural.FechaCreacion = DateTime.Now;
+            ModelState.Remove("FechaCreacion"); // por si el Required valida contra el binder
+
             if (ModelState.IsValid)
             {
                 db.PersonaNaturales.Add(personaNatural);
@@ -60,7 +55,6 @@ namespace PortalCiudadano.Controllers
             return View(personaNatural);
         }
 
-        // GET: PersonaNaturales/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,12 +69,9 @@ namespace PortalCiudadano.Controllers
             return View(personaNatural);
         }
 
-        // POST: PersonaNaturales/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "PersonaNaturalId,PersonaNaturalCedula,PersonaNaturalRUC,PersonaNaturalNombres,PersonaNaturalApellidos,DireccionContribuyente,TelefonoContribuyente,FaxContribuyente,CasillaContribuyente,ObligadoContabilidad,InicioActividad,CapitalPropio,FechaCreacion")] PersonaNatural personaNatural)
+        public async Task<ActionResult> Edit(PersonaNatural personaNatural)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +82,6 @@ namespace PortalCiudadano.Controllers
             return View(personaNatural);
         }
 
-        // GET: PersonaNaturales/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,7 +96,6 @@ namespace PortalCiudadano.Controllers
             return View(personaNatural);
         }
 
-        // POST: PersonaNaturales/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

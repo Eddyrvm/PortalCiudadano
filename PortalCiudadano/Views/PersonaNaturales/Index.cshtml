@@ -1,99 +1,75 @@
 ﻿@model IEnumerable<PortalCiudadano.Models.LiquidacionPatente.PersonaNatural>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Personas Naturales";
 }
 
-<h2>Index</h2>
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning-subtle d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="bi bi-people-fill text-warning me-2"></i>
+                Personas Naturales
+            </h5>
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Nueva
+            </a>
+        </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonaNaturalCedula)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonaNaturalRUC)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonaNaturalNombres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonaNaturalApellidos)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DireccionContribuyente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TelefonoContribuyente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FaxContribuyente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CasillaContribuyente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ObligadoContabilidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InicioActividad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CapitalPropio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaCreacion)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonaNaturalCedula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonaNaturalRUC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonaNaturalNombres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonaNaturalApellidos)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DireccionContribuyente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TelefonoContribuyente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FaxContribuyente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CasillaContribuyente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ObligadoContabilidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InicioActividad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CapitalPropio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaCreacion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PersonaNaturalId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PersonaNaturalId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PersonaNaturalId })
-        </td>
-    </tr>
-}
-
-</table>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.PersonaNaturalCedula)</th>
+                            <th>@Html.DisplayNameFor(model => model.PersonaNaturalRUC)</th>
+                            <th>@Html.DisplayNameFor(model => model.PersonaNaturalNombres)</th>
+                            <th>@Html.DisplayNameFor(model => model.PersonaNaturalApellidos)</th>
+                            <th>@Html.DisplayNameFor(model => model.DireccionContribuyente)</th>
+                            <th>@Html.DisplayNameFor(model => model.TelefonoContribuyente)</th>
+                            <th>@Html.DisplayNameFor(model => model.ObligadoContabilidad)</th>
+                            <th>@Html.DisplayNameFor(model => model.InicioActividad)</th>
+                            <th>@Html.DisplayNameFor(model => model.CapitalPropio)</th>
+                            <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.PersonaNaturalCedula</td>
+                                <td>@item.PersonaNaturalRUC</td>
+                                <td>@item.PersonaNaturalNombres</td>
+                                <td>@item.PersonaNaturalApellidos</td>
+                                <td>@item.DireccionContribuyente</td>
+                                <td>@item.TelefonoContribuyente</td>
+                                <td>
+                                    @if (item.ObligadoContabilidad)
+                                    {
+                                        <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Sí</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary"><i class="bi bi-x-circle me-1"></i> No</span>
+                                    }
+                                </td>
+                                <td>@item.InicioActividad.ToString("dd/MM/yyyy")</td>
+                                <td>$ @item.CapitalPropio.ToString("N2")</td>
+                                <td>@item.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("Edit", new { id=item.PersonaNaturalId })" class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="@Url.Action("Delete", new { id=item.PersonaNaturalId })" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

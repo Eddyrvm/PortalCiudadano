@@ -1,125 +1,159 @@
 ﻿@model PortalCiudadano.Models.LiquidacionPatente.PersonaNatural
-
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear Persona Natural";
 }
-
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PersonaNatural</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.PersonaNaturalCedula, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PersonaNaturalCedula, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonaNaturalCedula, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PersonaNaturalRUC, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PersonaNaturalRUC, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonaNaturalRUC, "", new { @class = "text-danger" })
+    <div class="container my-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning-subtle d-flex align-items-center gap-2">
+                <i class="bi bi-person-vcard fs-5 text-warning"></i>
+                <h5 class="mb-0">Liquidación - Persona Natural</h5>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PersonaNaturalNombres, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PersonaNaturalNombres, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonaNaturalNombres, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PersonaNaturalApellidos, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PersonaNaturalApellidos, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonaNaturalApellidos, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="row g-3">
+                    <!-- Columna izquierda -->
+                    <div class="col-12 col-lg-6">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DireccionContribuyente, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DireccionContribuyente, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DireccionContribuyente, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <!-- Cédula -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.PersonaNaturalCedula, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
+                                @Html.TextBoxFor(m => m.PersonaNaturalCedula, new { @class = "form-control", placeholder = "Ej. 1312345678", maxlength = "10" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.PersonaNaturalCedula, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TelefonoContribuyente, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TelefonoContribuyente, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TelefonoContribuyente, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <!-- RUC -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.PersonaNaturalRUC, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-upc-scan"></i></span>
+                                @Html.TextBoxFor(m => m.PersonaNaturalRUC, new { @class = "form-control", placeholder = "Ej. 1312345678001", maxlength = "13" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.PersonaNaturalRUC, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FaxContribuyente, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FaxContribuyente, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FaxContribuyente, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <!-- Nombres -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.PersonaNaturalNombres, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                @Html.TextBoxFor(m => m.PersonaNaturalNombres, new { @class = "form-control", placeholder = "Nombres" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.PersonaNaturalNombres, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CasillaContribuyente, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CasillaContribuyente, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CasillaContribuyente, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <!-- Apellidos -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.PersonaNaturalApellidos, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
+                                @Html.TextBoxFor(m => m.PersonaNaturalApellidos, new { @class = "form-control", placeholder = "Apellidos" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.PersonaNaturalApellidos, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ObligadoContabilidad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.ObligadoContabilidad)
-                    @Html.ValidationMessageFor(model => model.ObligadoContabilidad, "", new { @class = "text-danger" })
+                        <!-- Dirección -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.DireccionContribuyente, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                @Html.TextBoxFor(m => m.DireccionContribuyente, new { @class = "form-control", placeholder = "Dirección" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.DireccionContribuyente, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Columna derecha -->
+                    <div class="col-12 col-lg-6">
+
+                        <!-- Teléfono -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.TelefonoContribuyente, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                @Html.TextBoxFor(m => m.TelefonoContribuyente, new { @class = "form-control", placeholder = "Teléfono" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.TelefonoContribuyente, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Fax -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.FaxContribuyente, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-printer"></i></span>
+                                @Html.TextBoxFor(m => m.FaxContribuyente, new { @class = "form-control", placeholder = "Fax (opcional)" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.FaxContribuyente, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Casilla -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.CasillaContribuyente, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
+                                @Html.TextBoxFor(m => m.CasillaContribuyente, new { @class = "form-control", placeholder = "Casilla (opcional)" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.CasillaContribuyente, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Obligado a llevar contabilidad (checkbox) -->
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                @Html.CheckBoxFor(m => m.ObligadoContabilidad, new { @class = "form-check-input", role = "switch", id = "chkObligado" })
+                                <label class="form-check-label" for="chkObligado">
+                                    @Html.DisplayNameFor(m => m.ObligadoContabilidad)
+                                </label>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.ObligadoContabilidad, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Inicio Actividad (date) -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.InicioActividad, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                @Html.TextBoxFor(m => m.InicioActividad, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.InicioActividad, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Capital Propio (number) -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.CapitalPropio, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                                @Html.TextBoxFor(m => m.CapitalPropio, new { @class = "form-control", type = "number", step = "0.01", min = "0", placeholder = "0.00" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.CapitalPropio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.InicioActividad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.InicioActividad, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.InicioActividad, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CapitalPropio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CapitalPropio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CapitalPropio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaCreacion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaCreacion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaCreacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="card-footer d-flex gap-2 justify-content-between">
+                <div>
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Volver al listado
+                    </a>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="reset" class="btn btn-outline-warning">
+                        <i class="bi bi-eraser me-1"></i> Limpiar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save2 me-1"></i> Guardar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
