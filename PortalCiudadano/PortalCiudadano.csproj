@@ -175,6 +175,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MapSitiosController.cs" />
+    <Compile Include="Controllers\PersonaNaturalesController.cs" />
     <Compile Include="Controllers\ServicioLimpezasController.cs" />
     <Compile Include="Controllers\SettingUsersController.cs" />
     <Compile Include="Controllers\SolicitudGestionsController.cs" />
@@ -211,9 +212,19 @@
     <Compile Include="Migrations\202503010316519_Mapa.Designer.cs">
       <DependentUpon>202503010316519_Mapa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202509251833016_Inicial.cs" />
+    <Compile Include="Migrations\202509251833016_Inicial.Designer.cs">
+      <DependentUpon>202509251833016_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509251842001_Persona_Natural_Juridica.cs" />
+    <Compile Include="Migrations\202509251842001_Persona_Natural_Juridica.Designer.cs">
+      <DependentUpon>202509251842001_Persona_Natural_Juridica.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LiquidacionPatente\PersonaJuridica.cs" />
+    <Compile Include="Models\LiquidacionPatente\PersonaNatural.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MapaSitios\MapSitio.cs" />
     <Compile Include="Models\PortalCiudadanoContext.cs" />
@@ -344,6 +355,11 @@
     <Content Include="Views\SolicitudGestions\Edit.cshtml" />
     <Content Include="Views\SolicitudGestions\Index.cshtml" />
     <Content Include="Views\MapSitios\Index.cshtml" />
+    <Content Include="Views\PersonaNaturales\Create.cshtml" />
+    <Content Include="Views\PersonaNaturales\Delete.cshtml" />
+    <Content Include="Views\PersonaNaturales\Details.cshtml" />
+    <Content Include="Views\PersonaNaturales\Edit.cshtml" />
+    <Content Include="Views\PersonaNaturales\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -351,6 +367,7 @@
     <Folder Include="Content\ServicioLimpieza\" />
     <Folder Include="Content\SolicitudGestion\" />
     <Folder Include="Content\Users\" />
+    <Folder Include="Reports\LiquidacionPatente\" />
     <Folder Include="Reports\Planificacion\" />
     <Folder Include="Reports\Turismo\" />
   </ItemGroup>
@@ -396,6 +413,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503010316519_Mapa.resx">
       <DependentUpon>202503010316519_Mapa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509251833016_Inicial.resx">
+      <DependentUpon>202509251833016_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509251842001_Persona_Natural_Juridica.resx">
+      <DependentUpon>202509251842001_Persona_Natural_Juridica.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ServiciosPublicos\ServicioLimpiezas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

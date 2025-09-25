@@ -1,11 +1,8 @@
 ﻿namespace PortalCiudadano.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PortalCiudadano.Models.PortalCiudadanoContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Models.PortalCiudadanoContext>
     {
         public Configuration()
         {
@@ -13,7 +10,7 @@
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(PortalCiudadano.Models.PortalCiudadanoContext context)
+        protected override void Seed(Models.PortalCiudadanoContext context)
         {
             //  This method will be called after migrating to the latest version.
 

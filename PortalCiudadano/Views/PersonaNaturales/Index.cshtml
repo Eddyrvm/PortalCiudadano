@@ -1,0 +1,99 @@
+﻿@model IEnumerable<PortalCiudadano.Models.LiquidacionPatente.PersonaNatural>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonaNaturalCedula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonaNaturalRUC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonaNaturalNombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonaNaturalApellidos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DireccionContribuyente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelefonoContribuyente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FaxContribuyente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CasillaContribuyente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ObligadoContabilidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InicioActividad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CapitalPropio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonaNaturalCedula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonaNaturalRUC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonaNaturalNombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonaNaturalApellidos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DireccionContribuyente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelefonoContribuyente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FaxContribuyente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CasillaContribuyente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ObligadoContabilidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InicioActividad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CapitalPropio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaCreacion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PersonaNaturalId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PersonaNaturalId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PersonaNaturalId })
+        </td>
+    </tr>
+}
+
+</table>

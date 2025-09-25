@@ -1,0 +1,114 @@
+﻿@model PortalCiudadano.Models.LiquidacionPatente.PersonaNatural
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PersonaNatural</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaNaturalCedula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaNaturalCedula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaNaturalRUC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaNaturalRUC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaNaturalNombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaNaturalNombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaNaturalApellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaNaturalApellidos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DireccionContribuyente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DireccionContribuyente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelefonoContribuyente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelefonoContribuyente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FaxContribuyente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FaxContribuyente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CasillaContribuyente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CasillaContribuyente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ObligadoContabilidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ObligadoContabilidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InicioActividad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InicioActividad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CapitalPropio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CapitalPropio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PersonaNaturalId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
