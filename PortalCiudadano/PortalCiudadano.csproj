@@ -175,6 +175,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MapSitiosController.cs" />
+    <Compile Include="Controllers\PersonaJuridicasController.cs" />
     <Compile Include="Controllers\PersonaNaturalesController.cs" />
     <Compile Include="Controllers\ServicioLimpezasController.cs" />
     <Compile Include="Controllers\SettingUsersController.cs" />
@@ -359,6 +360,10 @@
     <Content Include="Views\PersonaNaturales\Delete.cshtml" />
     <Content Include="Views\PersonaNaturales\Edit.cshtml" />
     <Content Include="Views\PersonaNaturales\Index.cshtml" />
+    <Content Include="Views\PersonaJuridicas\Create.cshtml" />
+    <Content Include="Views\PersonaJuridicas\Delete.cshtml" />
+    <Content Include="Views\PersonaJuridicas\Edit.cshtml" />
+    <Content Include="Views\PersonaJuridicas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
