@@ -27,6 +27,8 @@ namespace PortalCiudadano.Models
 
         public DbSet<Actividad> Actividades { get; set; }
 
+        public DbSet<InfoEstadisticaProduc> InfoEstadisticaProducs { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PersonaNatural>()
