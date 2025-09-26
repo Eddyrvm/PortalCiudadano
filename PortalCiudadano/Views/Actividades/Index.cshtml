@@ -1,0 +1,61 @@
+﻿@model IEnumerable<PortalCiudadano.Models.LiquidacionPatente.Actividad>
+
+@{
+    ViewBag.Title = "Actividades";
+}
+
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning-subtle d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="bi bi-list-task text-warning me-2"></i>
+                Actividades
+            </h5>
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Nueva
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().NombreActividad)</th>
+                            <th class="text-center" style="width:200px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="2" class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox me-2"></i>No hay actividades registradas.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@item.NombreActividad</td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("Edit", new { id = item.ActividadId })"
+                                           class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="@Url.Action("Delete", new { id = item.ActividadId })"
+                                           class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

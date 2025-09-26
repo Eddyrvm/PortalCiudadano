@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActividadesController.cs" />
     <Compile Include="Controllers\ClasificacionesController.cs" />
     <Compile Include="Controllers\DeudasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -226,9 +227,14 @@
     <Compile Include="Migrations\202509252153040_Clasificacion.Designer.cs">
       <DependentUpon>202509252153040_Clasificacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202509260330274_Actividad.cs" />
+    <Compile Include="Migrations\202509260330274_Actividad.Designer.cs">
+      <DependentUpon>202509260330274_Actividad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LiquidacionPatente\Actividad.cs" />
     <Compile Include="Models\LiquidacionPatente\Clasificacion.cs" />
     <Compile Include="Models\LiquidacionPatente\PersonaJuridica.cs" />
     <Compile Include="Models\LiquidacionPatente\PersonaNatural.cs" />
@@ -374,6 +380,10 @@
     <Content Include="Views\Clasificaciones\Delete.cshtml" />
     <Content Include="Views\Clasificaciones\Edit.cshtml" />
     <Content Include="Views\Clasificaciones\Index.cshtml" />
+    <Content Include="Views\Actividades\Create.cshtml" />
+    <Content Include="Views\Actividades\Delete.cshtml" />
+    <Content Include="Views\Actividades\Edit.cshtml" />
+    <Content Include="Views\Actividades\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -436,6 +446,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202509252153040_Clasificacion.resx">
       <DependentUpon>202509252153040_Clasificacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509260330274_Actividad.resx">
+      <DependentUpon>202509260330274_Actividad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ServiciosPublicos\ServicioLimpiezas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

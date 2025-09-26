@@ -25,6 +25,8 @@ namespace PortalCiudadano.Models
 
         public DbSet<Clasificacion> Clasificaciones { get; set; }
 
+        public DbSet<Actividad> Actividades { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PersonaNatural>()
