@@ -23,6 +23,8 @@ namespace PortalCiudadano.Models
 
         public DbSet<PersonaNatural> PersonaNaturales { get; set; }
 
+        public DbSet<Clasificacion> Clasificaciones { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PersonaNatural>()
