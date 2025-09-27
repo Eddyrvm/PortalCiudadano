@@ -13,6 +13,32 @@ namespace PortalCiudadano.Controllers
         private PortalCiudadanoContext db = new PortalCiudadanoContext();
 
         // GET: PersonaNaturales
+
+        [HttpGet]
+        public ActionResult CreateModal()
+        {
+            // Devuelve solo el contenido del formulario
+            return PartialView("_CreatePersonaNaturalModal", new PersonaNatural());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateModal(PersonaNatural model)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Reenvía el formulario con errores para renderizar dentro del modal
+                return PartialView("_CreatePersonaNaturalModal", model);
+            }
+
+            db.PersonaNaturales.Add(model);
+            await db.SaveChangesAsync();
+
+            // Texto que verás en el combo
+            var text = $"{model.PersonaNaturalCedula} - {model.PersonaNaturalApellidos} {model.PersonaNaturalNombres}";
+            return Json(new { ok = true, id = model.PersonaNaturalId, text = text });
+        }
+
         public async Task<ActionResult> Index()
         {
             return View(await db.PersonaNaturales.ToListAsync());

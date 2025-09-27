@@ -1,0 +1,269 @@
+﻿@model PortalCiudadano.Models.LiquidacionPatente.LiquidarPatentePN
+@{
+    ViewBag.Title = "Crear Liquidación Persona Natural";
+    var ahora = DateTime.Now; // referencia visual
+}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
+
+        .select2-container .select2-selection--single {
+            height: calc(2.5rem + 2px);
+            border: 1px solid var(--bs-border-color);
+            border-radius: .375rem;
+            padding: .375rem .75rem;
+        }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                line-height: 1.5; /* como form-control */
+                padding-left: 0; /* evita doble padding */
+            }
+
+            .select2-container .select2-selection--single .select2-selection__arrow {
+                height: calc(2.5rem + 2px);
+                right: .5rem;
+            }
+</style>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container my-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning-subtle d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-receipt-cutoff fs-5 text-warning"></i>
+                    <h5 class="mb-0">Nueva Liquidación - Persona Natural</h5>
+                </div>
+                <a href="@Url.Action("Index")" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Volver
+                </a>
+            </div>
+
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                <!-- META compacto: Número (Contador) + Fecha de creación -->
+                <div class="d-flex flex-wrap align-items-center gap-4 small text-secondary mb-3">
+                    <span class="d-inline-flex align-items-center">
+                        <i class="bi bi-hash me-1"></i>
+                        <span class="me-1 fw-semibold">Número:</span>
+                        @(Model != null && Model.Contador > 0 ? Model.Contador.ToString() : "Se asignará al guardar")
+                    </span>
+                    <span class="d-inline-flex align-items-center">
+                        <i class="bi bi-clock-history me-1"></i>
+                        <span class="me-1 fw-semibold">Fecha de creación:</span>
+                        @ahora.ToString("dd/MM/yyyy HH:mm")
+                    </span>
+                </div>
+                @Html.ValidationMessageFor(m => m.Contador, "", new { @class = "text-danger small" })
+
+                @{
+                    var tiposSolicitud = new List<SelectListItem>
+                                                                                    {
+                        new SelectListItem { Value = "1", Text = "Primera vez" },
+                        new SelectListItem { Value = "2", Text = "Renovación" }
+                    };
+                }
+
+                <div class="row g-4">
+                    <!-- Columna izquierda -->
+                    <div class="col-12 col-lg-6">
+
+                        <!-- Tipo de solicitud -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.TipoSolicitud, new { @class = "form-label fw-semibold" })
+                            @Html.DropDownListFor(m => m.TipoSolicitud, tiposSolicitud, "-- Seleccione --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.TipoSolicitud, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Número de patente asignada -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.NumPatenteAsignada, new { @class = "form-label fw-semibold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-upc-scan"></i></span>
+                                @Html.TextBoxFor(m => m.NumPatenteAsignada, new { @class = "form-control", placeholder = "Ej. PAT-000123" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.NumPatenteAsignada, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Columna derecha -->
+                    <div class="col-12 col-lg-6">
+
+                        <!-- Persona Natural -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.PersonaNaturalId, "Persona natural", new { @class = "form-label fw-semibold" })
+                            <div class="d-flex gap-2 align-items-start">
+                                <div class="flex-grow-1">
+                                    @Html.DropDownListFor(
+                                        m => m.PersonaNaturalId,
+                                        (SelectList)ViewBag.PersonaNaturalId,
+                                        "-- Seleccione --",
+                                        new { @class = "form-select", id = "PersonaNaturalId", style = "width:100%;" }
+                                    )
+                                </div>
+
+                                <!-- Botón Nuevo (abre modal) -->
+                                <button type="button" id="btnNuevoPN" class="btn btn-outline-success flex-shrink-0">
+                                    <i class="bi bi-plus-circle me-1"></i> Nuevo
+                                </button>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.PersonaNaturalId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Clasificación -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.ClasificacionId, "Clasificación", new { @class = "form-label fw-semibold" })
+                            @Html.DropDownListFor(m => m.ClasificacionId, (SelectList)ViewBag.ClasificacionId, "-- Seleccione --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.ClasificacionId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Actividad -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.ActividadId, "Actividad", new { @class = "form-label fw-semibold" })
+                            @Html.DropDownListFor(m => m.ActividadId, (SelectList)ViewBag.ActividadId, "-- Seleccione --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.ActividadId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Información Estadística -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.InfoEstadisticaProducId, "Info. estadística", new { @class = "form-label fw-semibold" })
+                            @Html.DropDownListFor(m => m.InfoEstadisticaProducId, (SelectList)ViewBag.InfoEstadisticaProducId, "-- Seleccione --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.InfoEstadisticaProducId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Cantidad de Empleados -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.CantidadEmpleadoId, "Cantidad de empleados", new { @class = "form-label fw-semibold" })
+                            @Html.DropDownListFor(m => m.CantidadEmpleadoId, (SelectList)ViewBag.CantidadEmpleadoId, "-- Seleccione --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.CantidadEmpleadoId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+                <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Cancelar
+                </a>
+                <div class="d-flex gap-2">
+                    <button type="reset" class="btn btn-outline-warning">
+                        <i class="bi bi-eraser me-1"></i> Limpiar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save2 me-1"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal Persona Natural -->
+<div class="modal fade" id="modalPersonaNatural" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva Persona Natural</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="modalPersonaNaturalBody">
+                <div class="text-center text-muted p-4">
+                    <div class="spinner-border me-2" role="status"></div> Cargando…
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            // Select2 (si no lo tienes ya)
+            var $ddl = $('#PersonaNaturalId');
+            if ($ddl.length && $ddl.data('select2') === undefined) {
+                $ddl.select2({
+                    width: '100%',
+                    placeholder: '-- Seleccione --',
+                    allowClear: true,
+                    language: {
+                        noResults: () => "Sin resultados",
+                        searching: () => "Buscando..."
+                    }
+                });
+            }
+
+            const modalEl = document.getElementById('modalPersonaNatural');
+            const modal = new bootstrap.Modal(modalEl);
+
+            $('#btnNuevoPN').on('click', function () {
+                // placeholder de carga
+                $('#modalPersonaNaturalBody').html(
+                    '<div class="text-center text-muted p-4"><div class="spinner-border me-2" role="status"></div> Cargando…</div>'
+                );
+
+                // Carga la vista parcial (GET)
+                $.get('@Url.Action("CreateModal", "PersonaNaturales")', function (html) {
+                    $('#modalPersonaNaturalBody').html(html);
+                    wireModalForm(); // engancha el submit AJAX
+                });
+
+                modal.show();
+            });
+
+            function wireModalForm() {
+                const $form = $('#formPersonaNatural');
+                if (!$form.length) return;
+
+                $form.off('submit').on('submit', function (e) {
+                    e.preventDefault();
+                    const url = $form.attr('action');
+                    const data = $form.serialize();
+
+                    $.post(url, data)
+                        .done(function (result) {
+                            // Si el servidor devuelve JSON {ok:true,...}
+                            if (typeof result === 'object' && result.ok) {
+                                const id = result.id;
+                                const text = result.text;
+
+                                // Agregar/seleccionar en Select2
+                                if ($ddl.find('option[value="' + id + '"]').length === 0) {
+                                    const newOption = new Option(text, id, true, true);
+                                    $ddl.append(newOption).trigger('change');
+                                } else {
+                                    $ddl.val(id).trigger('change');
+                                }
+
+                                bootstrap.Modal.getInstance(modalEl).hide();
+                            } else {
+                                // Si devolvió HTML (errores de validación), reinyecta el formulario
+                                $('#modalPersonaNaturalBody').html(result);
+                                wireModalForm();
+                            }
+                        })
+                        .fail(function (xhr) {
+                            // Si el servidor devuelve HTML con errores
+                            if (xhr.responseText) {
+                                $('#modalPersonaNaturalBody').html(xhr.responseText);
+                                wireModalForm();
+                            } else {
+                                $('#modalPersonaNaturalBody').html('<div class="alert alert-danger">Ocurrió un error.</div>');
+                            }
+                        });
+                });
+            }
+        });
+    </script>
+}

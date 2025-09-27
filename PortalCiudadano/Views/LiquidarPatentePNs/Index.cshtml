@@ -1,0 +1,105 @@
+﻿@model IEnumerable<PortalCiudadano.Models.LiquidacionPatente.LiquidarPatentePN>
+
+@{
+    ViewBag.Title = "Liquidaciones Persona Natural";
+}
+
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning-subtle d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <h5 class="mb-0 d-flex align-items-center">
+                <i class="bi bi-receipt-cutoff text-warning me-2"></i>
+                Liquidaciones de Patente (P. Natural)
+            </h5>
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Nueva
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+            <!-- Wrapper responsive: hace scroll horizontal en <= md -->
+            <div class="table-responsive-md">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().ActividadId)</th>
+                            <th class="d-none d-md-table-cell">@Html.DisplayNameFor(m => m.FirstOrDefault().CantidadEmpleadoId)</th>
+                            <th class="d-none d-lg-table-cell">@Html.DisplayNameFor(m => m.FirstOrDefault().ClasificacionId)</th>
+                            <th class="d-none d-lg-table-cell">@Html.DisplayNameFor(m => m.FirstOrDefault().InfoEstadisticaProducId)</th>
+                            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().PersonaNaturalId)</th>
+                            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Contador)</th>
+                            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().TipoSolicitud)</th>
+                            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().NumPatenteAsignada)</th>
+                            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().FechaCreada)</th>
+                            <th class="text-center text-nowrap">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-truncate" style="max-width:220px;">
+                                    @(item.Actividad != null ? item.Actividad.NombreActividad : "")
+                                </td>
+
+                                <td class="d-none d-md-table-cell">
+                                    @(item.CantidadEmpleado != null ? item.CantidadEmpleado.NumeroEmpleados.ToString() : "")
+                                </td>
+
+                                <td class="d-none d-lg-table-cell text-truncate" style="max-width:220px;">
+                                    @(item.Clasificacion != null ? item.Clasificacion.NombreClasificacion : "")
+                                </td>
+
+                                <td class="d-none d-lg-table-cell text-truncate" style="max-width:220px;">
+                                    @(item.InfoEstadisticaProduc != null ? item.InfoEstadisticaProduc.IndoEstadisticaProducName : "")
+                                </td>
+
+                                <td class="text-truncate" style="max-width:200px;">
+                                    @(item.PersonaNatural != null ? item.PersonaNatural.PersonaNaturalCedula : "")
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-dark">
+                                        <i class="bi bi-hash me-1"></i>@item.Contador
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (item.TipoSolicitud == 1)
+                                    {
+                                        <span class="badge bg-success">Primera vez</span>
+                                    }
+                                    else if (item.TipoSolicitud == 2)
+                                    {
+                                        <span class="badge bg-info text-dark">Renovación</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">N/D</span>
+                                    }
+                                </td>
+
+                                <td class="fw-semibold text-nowrap">@item.NumPatenteAsignada</td>
+                                <td class="text-nowrap">@item.FechaCreada.ToString("dd/MM/yyyy HH:mm")</td>
+
+                                <td class="text-center text-nowrap">
+                                    <a href="@Url.Action("Edit", new { id = item.LiquidarPatentePNId })" class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="@Url.Action("Details", new { id = item.LiquidarPatentePNId })" class="btn btn-sm btn-outline-info me-1" title="Detalles">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="@Url.Action("Delete", new { id = item.LiquidarPatentePNId })" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div> <!-- /table-responsive-md -->
+        </div>
+    </div>
+</div>
+
+

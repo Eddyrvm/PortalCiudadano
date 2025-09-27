@@ -19,7 +19,6 @@
             padding-bottom: 30px; /* Margen inferior para evitar superposición al desplazarse */
         }
     </style>
-
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark custom-navbar fixed-top">
@@ -140,7 +139,38 @@
                             </li>
                         </ul>
                     </li>
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Gestionar Patente
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "PersonaNaturales")">
+                                    <i class="bi bi-person-lines-fill"></i> Persona Natural
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "PersonaJuridicas")">
+                                    <i class="bi bi-buildings"></i> Persona Jurídica
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "CantidadEmpleados")">
+                                    <i class="bi bi-server"></i> Cantidad de empleados
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "Clasificaciones")">
+                                    <i class="bi bi-signpost-2"></i> Clasificación domiciliaria
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "InfoEstadisticaProducs")">
+                                    <i class="bi bi-bar-chart"></i> Información estadistica
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -167,12 +197,12 @@
 
                 <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                     @*<li class="ms-3">
-                        <a class="text-body-secondary" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="$gray-900" class="bi bi-twitter-x" viewBox="0 0 16 16">
-                                <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
-                            </svg><use xlink:href="#twitter" />
-                        </a>
-                    </li>*@
+                            <a class="text-body-secondary" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="$gray-900" class="bi bi-twitter-x" viewBox="0 0 16 16">
+                                    <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                                </svg><use xlink:href="#twitter" />
+                            </a>
+                        </li>*@
                     <li class="ms-3">
                         <a class="text-body-secondary" href="https://www.instagram.com/alcaldia.bolivar?igsh=MTVmc3psajIwcmxwNw==">
                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="#d63384" class="bi bi-instagram" viewBox="0 0 16 16">

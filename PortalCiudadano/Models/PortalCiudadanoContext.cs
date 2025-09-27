@@ -29,6 +29,10 @@ namespace PortalCiudadano.Models
 
         public DbSet<InfoEstadisticaProduc> InfoEstadisticaProducs { get; set; }
 
+        public DbSet<CantidadEmpleado> CantidadEmpleados { get; set; }
+
+        public DbSet<LiquidarPatentePN> LiquidarPatentePNs { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PersonaNatural>()

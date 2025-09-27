@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace PortalCiudadano.Models.LiquidacionPatente
@@ -12,5 +13,7 @@ namespace PortalCiudadano.Models.LiquidacionPatente
         [StringLength(220, ErrorMessage = "El nombre no debe exceder los {1} caracteres.")]
         [DisplayName("Clasificación domiciliaria")]
         public string NombreClasificacion { get; set; }
+
+        public virtual ICollection<LiquidarPatentePN> LiquidarPatentePNs { get; set; }
     }
 }

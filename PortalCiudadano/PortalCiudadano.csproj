@@ -172,10 +172,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActividadesController.cs" />
+    <Compile Include="Controllers\CantidadEmpleadosController.cs" />
     <Compile Include="Controllers\ClasificacionesController.cs" />
     <Compile Include="Controllers\DeudasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoEstadisticaProducsController.cs" />
+    <Compile Include="Controllers\LiquidarPatentePNsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MapSitiosController.cs" />
     <Compile Include="Controllers\PersonaJuridicasController.cs" />
@@ -236,12 +238,22 @@
     <Compile Include="Migrations\202509260403177_InfoEstadistica.Designer.cs">
       <DependentUpon>202509260403177_InfoEstadistica.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202509261503576_CantidadEmpleados.cs" />
+    <Compile Include="Migrations\202509261503576_CantidadEmpleados.Designer.cs">
+      <DependentUpon>202509261503576_CantidadEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509261921539_LiquidacionPatentePN.cs" />
+    <Compile Include="Migrations\202509261921539_LiquidacionPatentePN.Designer.cs">
+      <DependentUpon>202509261921539_LiquidacionPatentePN.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LiquidacionPatente\Actividad.cs" />
+    <Compile Include="Models\LiquidacionPatente\CantidadEmpleado.cs" />
     <Compile Include="Models\LiquidacionPatente\Clasificacion.cs" />
     <Compile Include="Models\LiquidacionPatente\InfoEstadisticaProduc.cs" />
+    <Compile Include="Models\LiquidacionPatente\LiquidarPatentePN.cs" />
     <Compile Include="Models\LiquidacionPatente\PersonaJuridica.cs" />
     <Compile Include="Models\LiquidacionPatente\PersonaNatural.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -394,6 +406,16 @@
     <Content Include="Views\InfoEstadisticaProducs\Delete.cshtml" />
     <Content Include="Views\InfoEstadisticaProducs\Edit.cshtml" />
     <Content Include="Views\InfoEstadisticaProducs\Index.cshtml" />
+    <Content Include="Views\CantidadEmpleados\Create.cshtml" />
+    <Content Include="Views\CantidadEmpleados\Delete.cshtml" />
+    <Content Include="Views\CantidadEmpleados\Edit.cshtml" />
+    <Content Include="Views\CantidadEmpleados\Index.cshtml" />
+    <Content Include="Views\LiquidarPatentePNs\Create.cshtml" />
+    <Content Include="Views\LiquidarPatentePNs\Delete.cshtml" />
+    <Content Include="Views\LiquidarPatentePNs\Details.cshtml" />
+    <Content Include="Views\LiquidarPatentePNs\Edit.cshtml" />
+    <Content Include="Views\LiquidarPatentePNs\Index.cshtml" />
+    <Content Include="Views\PersonaNaturales\_CreatePersonaNaturalModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -462,6 +484,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202509260403177_InfoEstadistica.resx">
       <DependentUpon>202509260403177_InfoEstadistica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509261503576_CantidadEmpleados.resx">
+      <DependentUpon>202509261503576_CantidadEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509261921539_LiquidacionPatentePN.resx">
+      <DependentUpon>202509261921539_LiquidacionPatentePN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ServiciosPublicos\ServicioLimpiezas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

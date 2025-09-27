@@ -1,0 +1,96 @@
+﻿@model PortalCiudadano.Models.LiquidacionPatente.LiquidarPatentePN
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>LiquidarPatentePN</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Actividad.NombreActividad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actividad.NombreActividad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CantidadEmpleado.NumeroEmpleados)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CantidadEmpleado.NumeroEmpleados)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clasificacion.NombreClasificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clasificacion.NombreClasificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InfoEstadisticaProduc.IndoEstadisticaProducName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InfoEstadisticaProduc.IndoEstadisticaProducName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaNatural.PersonaNaturalCedula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaNatural.PersonaNaturalCedula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoSolicitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoSolicitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumPatenteAsignada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumPatenteAsignada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreada)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

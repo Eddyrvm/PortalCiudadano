@@ -1,0 +1,90 @@
+﻿@model PortalCiudadano.Models.LiquidacionPatente.LiquidarPatentePN
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LiquidarPatentePN</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Actividad.NombreActividad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actividad.NombreActividad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CantidadEmpleado.NumeroEmpleados)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CantidadEmpleado.NumeroEmpleados)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clasificacion.NombreClasificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clasificacion.NombreClasificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InfoEstadisticaProduc.IndoEstadisticaProducName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InfoEstadisticaProduc.IndoEstadisticaProducName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonaNatural.PersonaNaturalCedula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonaNatural.PersonaNaturalCedula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoSolicitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoSolicitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumPatenteAsignada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumPatenteAsignada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreada)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LiquidarPatentePNId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
