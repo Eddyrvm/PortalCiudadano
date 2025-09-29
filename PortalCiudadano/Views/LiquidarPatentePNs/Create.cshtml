@@ -62,7 +62,7 @@
 
                 @{
                     var tiposSolicitud = new List<SelectListItem>
-                                                                                    {
+                                                                                        {
                         new SelectListItem { Value = "1", Text = "Primera vez" },
                         new SelectListItem { Value = "2", Text = "Renovación" }
                     };
@@ -184,13 +184,11 @@
     </div>
 </div>
 
-
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(function () {
-            // Select2 (si no lo tienes ya)
             var $ddl = $('#PersonaNaturalId');
             if ($ddl.length && $ddl.data('select2') === undefined) {
                 $ddl.select2({

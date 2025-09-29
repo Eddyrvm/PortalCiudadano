@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -76,5 +77,11 @@ namespace PortalCiudadano.Models.LiquidacionPatente
 
         [NotMapped]
         public string ObligadoContabilidadTexto => ObligadoContabilidad ? "Sí" : "No";
+
+        public virtual ICollection<LiquidarPatentePJ> LiquidarPatentePJs { get; set; }
+
+        [NotMapped]
+        public string RUCApellidosNombres =>
+        $"{PersonaJuridicaRUC?.Trim()} - {PersonaJuridicaApellidos?.Trim()} {PersonaJuridicaNombres?.Trim()}";
     }
 }

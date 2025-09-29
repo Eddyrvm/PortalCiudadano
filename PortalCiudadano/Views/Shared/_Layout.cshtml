@@ -234,7 +234,7 @@
         clearTimeout(timeout);
         timeout = setTimeout(() => {
             alert('La sesión ha expirado por inactividad.');
-            window.location.href = '/Account/Logout'; // Redirige a la acción Logout
+            window.location.href = '/Home/Index'; // Redirige a la acción Index
         }, 25 * 60 * 1000); // 30 minutos
     }
 

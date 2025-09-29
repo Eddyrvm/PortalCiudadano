@@ -1,0 +1,106 @@
+﻿@model PortalCiudadano.Models.LiquidacionPatente.LiquidarPatentePJ
+
+@{
+    ViewBag.Title = "Detalle Liquidación (PJ)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var tipo = Model.TipoSolicitud == 1 ? "Primera vez"
+             : Model.TipoSolicitud == 2 ? "Renovación"
+             : "N/D";
+    var tipoBadgeClass = tipo == "Primera vez" ? "bg-success"
+                        : tipo == "Renovación" ? "bg-info text-dark"
+                        : "bg-secondary";
+}
+
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary-subtle d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <h5 class="mb-0 d-flex align-items-center">
+                <i class="bi bi-file-earmark-text text-primary me-2"></i>
+                Detalle de Liquidación - Persona Jurídica
+            </h5>
+            <div class="d-flex gap-2">
+                <a href="@Url.Action("Edit", new { id = Model.LiquidarPatentePJId })" class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil-square me-1"></i> Editar
+                </a>
+                <a href="@Url.Action("Index")" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Volver
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!-- Meta -->
+            <div class="d-flex flex-wrap align-items-center gap-4 small text-secondary mb-3">
+                <span class="d-inline-flex align-items-center">
+                    <i class="bi bi-hash me-1"></i>
+                    <span class="me-1 fw-semibold">Número:</span>
+                    <span class="badge bg-dark">@Model.Contador</span>
+                </span>
+                <span class="d-inline-flex align-items-center">
+                    <i class="bi bi-tag me-1"></i>
+                    <span class="me-1 fw-semibold">Tipo de solicitud:</span>
+                    <span class="badge @tipoBadgeClass">@tipo</span>
+                </span>
+            </div>
+
+            <!-- Datos en tarjetas -->
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <div class="fw-semibold text-muted mb-1">Actividad</div>
+                        <div class="fs-6">@Model.Actividad?.NombreActividad ?? "-"</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <div class="fw-semibold text-muted mb-1">Cantidad de empleados</div>
+                        <div class="fs-6">@Model.CantidadEmpleado?.NumeroEmpleados.ToString() ?? "-"</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <div class="fw-semibold text-muted mb-1">Clasificación</div>
+                        <div class="fs-6">@Model.Clasificacion?.NombreClasificacion ?? "-"</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <div class="fw-semibold text-muted mb-1">Info. estadística</div>
+                        <div class="fs-6">@Model.InfoEstadisticaProduc?.IndoEstadisticaProducName ?? "-"</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <div class="fw-semibold text-muted mb-1">Persona jurídica</div>
+                        <div class="fs-6">@Model.PersonaJuridicas?.PersonaJuridicaRazonSocial ?? "-"</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <div class="fw-semibold text-muted mb-1">Nro. Patente asignada</div>
+                        <div class="fs-6 fw-semibold">@(!string.IsNullOrWhiteSpace(Model.NumPatenteAsignada) ? Model.NumPatenteAsignada : "-")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+            <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left-circle me-1"></i> Volver
+            </a>
+            <div class="d-flex gap-2">
+                <a href="@Url.Action("Edit", new { id = Model.LiquidarPatentePJId })" class="btn btn-primary">
+                    <i class="bi bi-pencil-square me-1"></i> Editar
+                </a>
+                <a href="@Url.Action("Delete", new { id = Model.LiquidarPatentePJId })" class="btn btn-outline-danger">
+                    <i class="bi bi-trash me-1"></i> Eliminar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

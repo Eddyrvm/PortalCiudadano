@@ -1,0 +1,95 @@
+﻿@model IEnumerable<PortalCiudadano.Models.LiquidacionPatente.LiquidarPatentePJ>
+
+@{
+    ViewBag.Title = "Liquidaciones PJ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning-subtle d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 d-flex align-items-center">
+                <i class="bi bi-receipt-cutoff text-warning me-2"></i>
+                Liquidaciones de Patente (P. Jurídica)
+            </h5>
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Nueva
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0 w-100">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="bi bi-briefcase me-1"></i> Actividad</th>
+                            <th><i class="bi bi-people me-1"></i> # Empleados</th>
+                            <th><i class="bi bi-diagram-3 me-1"></i> Clasificación</th>
+                            <th><i class="bi bi-graph-up me-1"></i> Info. estadística</th>
+                            <th><i class="bi bi-buildings me-1"></i> Persona jurídica</th>
+                            <th><i class="bi bi-hash me-1"></i> Número</th>
+                            <th><i class="bi bi-tag me-1"></i> Tipo</th>
+                            <th><i class="bi bi-upc-scan me-1"></i> N° Patente</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(item.Actividad != null ? item.Actividad.NombreActividad : "")</td>
+                                    <td>@(item.CantidadEmpleado != null ? item.CantidadEmpleado.NumeroEmpleados.ToString() : "")</td>
+                                    <td>@(item.Clasificacion != null ? item.Clasificacion.NombreClasificacion : "")</td>
+                                    <td>@(item.InfoEstadisticaProduc != null ? item.InfoEstadisticaProduc.IndoEstadisticaProducName : "")</td>
+                                    <td>@(item.PersonaJuridicas != null ? item.PersonaJuridicas.PersonaJuridicaRazonSocial : "")</td>
+
+                                    <td>
+                                        <span class="badge bg-dark">
+                                            <i class="bi bi-hash me-1"></i>@item.Contador
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @if (item.TipoSolicitud == 1)
+                                        {<span class="badge bg-success">Primera vez</span> }
+                                        else if (item.TipoSolicitud == 2)
+                                        { <span class="badge bg-info text-dark">Renovación</span> }
+                                        else
+                                        { <span class="badge bg-secondary">N/D</span>}
+                                    </td>
+
+                                    <td class="fw-semibold">@item.NumPatenteAsignada</td>
+
+                                    <td class="text-center">
+                                        <a href="@Url.Action("Edit", new { id = item.LiquidarPatentePJId })"
+                                           class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="@Url.Action("Details", new { id = item.LiquidarPatentePJId })"
+                                           class="btn btn-sm btn-outline-info me-1" title="Detalles">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="@Url.Action("Delete", new { id = item.LiquidarPatentePJId })"
+                                           class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox me-1"></i> No hay registros para mostrar.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,6 +33,8 @@ namespace PortalCiudadano.Models
 
         public DbSet<LiquidarPatentePN> LiquidarPatentePNs { get; set; }
 
+        public DbSet<LiquidarPatentePJ> LiquidarPatentePJs { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PersonaNatural>()

@@ -177,6 +177,7 @@
     <Compile Include="Controllers\DeudasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoEstadisticaProducsController.cs" />
+    <Compile Include="Controllers\LiquidarPatentePJsController.cs" />
     <Compile Include="Controllers\LiquidarPatentePNsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MapSitiosController.cs" />
@@ -246,6 +247,10 @@
     <Compile Include="Migrations\202509261921539_LiquidacionPatentePN.Designer.cs">
       <DependentUpon>202509261921539_LiquidacionPatentePN.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202509291414301_LiquidarPatentePJ.cs" />
+    <Compile Include="Migrations\202509291414301_LiquidarPatentePJ.Designer.cs">
+      <DependentUpon>202509291414301_LiquidarPatentePJ.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -253,6 +258,7 @@
     <Compile Include="Models\LiquidacionPatente\CantidadEmpleado.cs" />
     <Compile Include="Models\LiquidacionPatente\Clasificacion.cs" />
     <Compile Include="Models\LiquidacionPatente\InfoEstadisticaProduc.cs" />
+    <Compile Include="Models\LiquidacionPatente\LiquidarPatentePJ.cs" />
     <Compile Include="Models\LiquidacionPatente\LiquidarPatentePN.cs" />
     <Compile Include="Models\LiquidacionPatente\PersonaJuridica.cs" />
     <Compile Include="Models\LiquidacionPatente\PersonaNatural.cs" />
@@ -266,6 +272,12 @@
     <Compile Include="Models\ServiciosPublicos\TipoServicio.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\LiquidacionPatente\LiquidPatenPersonN.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiquidPatenPersonN.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\ServiciosPublicos\ServicioLimpiezas.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -416,6 +428,12 @@
     <Content Include="Views\LiquidarPatentePNs\Edit.cshtml" />
     <Content Include="Views\LiquidarPatentePNs\Index.cshtml" />
     <Content Include="Views\PersonaNaturales\_CreatePersonaNaturalModal.cshtml" />
+    <Content Include="Views\PersonaJuridicas\Details.cshtml" />
+    <Content Include="Views\LiquidarPatentePJs\Create.cshtml" />
+    <Content Include="Views\LiquidarPatentePJs\Delete.cshtml" />
+    <Content Include="Views\LiquidarPatentePJs\Details.cshtml" />
+    <Content Include="Views\LiquidarPatentePJs\Edit.cshtml" />
+    <Content Include="Views\LiquidarPatentePJs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -423,7 +441,6 @@
     <Folder Include="Content\ServicioLimpieza\" />
     <Folder Include="Content\SolicitudGestion\" />
     <Folder Include="Content\Users\" />
-    <Folder Include="Reports\LiquidacionPatente\" />
     <Folder Include="Reports\Planificacion\" />
     <Folder Include="Reports\Turismo\" />
   </ItemGroup>
@@ -490,6 +507,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202509261921539_LiquidacionPatentePN.resx">
       <DependentUpon>202509261921539_LiquidacionPatentePN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509291414301_LiquidarPatentePJ.resx">
+      <DependentUpon>202509291414301_LiquidarPatentePJ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LiquidacionPatente\LiquidPatenPersonN.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LiquidPatenPersonN.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ServiciosPublicos\ServicioLimpiezas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

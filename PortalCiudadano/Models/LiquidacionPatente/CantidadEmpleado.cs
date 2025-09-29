@@ -15,5 +15,7 @@ namespace PortalCiudadano.Models.LiquidacionPatente
         public string NumeroEmpleados { get; set; }
 
         public virtual ICollection<LiquidarPatentePN> LiquidarPatentePNs { get; set; }
+
+        public virtual ICollection<LiquidarPatentePJ> LiquidarPatentePJs { get; set; }
     }
 }
