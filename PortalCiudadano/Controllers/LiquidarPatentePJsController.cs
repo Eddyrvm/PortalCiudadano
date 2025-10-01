@@ -132,8 +132,12 @@ namespace PortalCiudadano.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "LiquidarPatentePJId,Contador,TipoSolicitud,NumPatenteAsignada,FechaCreada,PersonaJuridicalId,ClasificacionId,ActividadId,InfoEstadisticaProducId,CantidadEmpleadoId")] LiquidarPatentePJ liquidarPatentePJ)
+        public async Task<ActionResult> Edit(LiquidarPatentePJ liquidarPatentePJ)
         {
+            liquidarPatentePJ.FechaCreada = DateTime.Now;
+
+            // Evita que el estado previo del binder invalide el Required
+            ModelState.Remove("FechaCreada");
             if (ModelState.IsValid)
             {
                 db.Entry(liquidarPatentePJ).State = EntityState.Modified;

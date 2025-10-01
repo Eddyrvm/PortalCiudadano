@@ -22,12 +22,12 @@
                 <table class="table table-hover table-striped align-middle mb-0 w-100">
                     <thead class="table-light">
                         <tr>
+                            <th><i class="bi bi-hash me-1"></i> Número</th>
+                            <th><i class="bi bi-hash me-1"></i> Nombres</th>
+                            <th><i class="bi bi-buildings me-1"></i> Persona jurídica</th>
                             <th><i class="bi bi-briefcase me-1"></i> Actividad</th>
                             <th><i class="bi bi-people me-1"></i> # Empleados</th>
-                            <th><i class="bi bi-diagram-3 me-1"></i> Clasificación</th>
                             <th><i class="bi bi-graph-up me-1"></i> Info. estadística</th>
-                            <th><i class="bi bi-buildings me-1"></i> Persona jurídica</th>
-                            <th><i class="bi bi-hash me-1"></i> Número</th>
                             <th><i class="bi bi-tag me-1"></i> Tipo</th>
                             <th><i class="bi bi-upc-scan me-1"></i> N° Patente</th>
                             <th class="text-center">Acciones</th>
@@ -39,17 +39,16 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@(item.Actividad != null ? item.Actividad.NombreActividad : "")</td>
-                                    <td>@(item.CantidadEmpleado != null ? item.CantidadEmpleado.NumeroEmpleados.ToString() : "")</td>
-                                    <td>@(item.Clasificacion != null ? item.Clasificacion.NombreClasificacion : "")</td>
-                                    <td>@(item.InfoEstadisticaProduc != null ? item.InfoEstadisticaProduc.IndoEstadisticaProducName : "")</td>
-                                    <td>@(item.PersonaJuridicas != null ? item.PersonaJuridicas.PersonaJuridicaRazonSocial : "")</td>
-
                                     <td>
                                         <span class="badge bg-dark">
                                             <i class="bi bi-hash me-1"></i>@item.Contador
                                         </span>
                                     </td>
+                                    <td>@(item.PersonaJuridicas != null ? item.PersonaJuridicas.NombreCompleto : "")</td>
+                                    <td>@(item.PersonaJuridicas != null ? item.PersonaJuridicas.PersonaJuridicaRazonSocial : "")</td>
+                                    <td>@(item.Actividad != null ? item.Actividad.NombreActividad : "")</td>
+                                    <td>@(item.CantidadEmpleado != null ? item.CantidadEmpleado.NumeroEmpleados.ToString() : "")</td>
+                                    <td>@(item.InfoEstadisticaProduc != null ? item.InfoEstadisticaProduc.IndoEstadisticaProducName : "")</td>
 
                                     <td>
                                         @if (item.TipoSolicitud == 1)

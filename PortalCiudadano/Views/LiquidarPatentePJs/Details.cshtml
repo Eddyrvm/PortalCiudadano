@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Detalle Liquidación (PJ)";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
     var tipo = Model.TipoSolicitud == 1 ? "Primera vez"
              : Model.TipoSolicitud == 2 ? "Renovación"
              : "N/D";
