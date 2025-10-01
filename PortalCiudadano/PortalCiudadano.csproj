@@ -434,6 +434,7 @@
     <Content Include="Views\LiquidarPatentePJs\Details.cshtml" />
     <Content Include="Views\LiquidarPatentePJs\Edit.cshtml" />
     <Content Include="Views\LiquidarPatentePJs\Index.cshtml" />
+    <Content Include="Views\PersonaJuridicas\_CreatePersonaJuridicaModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

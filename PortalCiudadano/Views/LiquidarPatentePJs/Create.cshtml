@@ -5,7 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var ahora = DateTime.Now; // Solo referencia visual
 }
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
 
+        .select2-container .select2-selection--single {
+            height: calc(2.5rem + 2px);
+            border: 1px solid var(--bs-border-color);
+            border-radius: .375rem;
+            padding: .375rem .75rem;
+        }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                line-height: 1.5; /* como form-control */
+                padding-left: 0; /* evita doble padding */
+            }
+
+            .select2-container .select2-selection--single .select2-selection__arrow {
+                height: calc(2.5rem + 2px);
+                right: .5rem;
+            }
+</style>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
 {
     @Html.AntiForgeryToken()
@@ -45,7 +67,7 @@
                 @{
                     // Dropdown de TipoSolicitud (1 = Primera vez, 2 = Renovación)
                     var tiposSolicitud = new List<SelectListItem>
-                            {
+                                                                                                                    {
                         new SelectListItem { Value = "1", Text = "Primera vez", Selected = (Model?.TipoSolicitud == 1) },
                         new SelectListItem { Value = "2", Text = "Renovación",  Selected = (Model?.TipoSolicitud == 2) }
                     };
@@ -102,9 +124,24 @@
 
                         <!-- Persona Jurídica -->
                         <div class="mb-3">
-                            @Html.LabelFor(m => m.PersonaJuridicalId, "Persona jurídica", new { @class = "form-label fw-semibold" })
-                            @Html.DropDownListFor(m => m.PersonaJuridicalId, (SelectList)ViewBag.PersonaJuridicalId, "-- Seleccione --",
-                                new { @class = "form-select" })
+                            @Html.LabelFor(m => m.PersonaJuridicalId, "Persona Jurídica", new { @class = "form-label fw-semibold" })
+                            <div class="d-flex gap-2 align-items-start">
+                                <div class="flex-grow-1">
+                                    @Html.DropDownListFor(
+                                        m => m.PersonaJuridicalId,
+                                        (SelectList)ViewBag.PersonaJuridicalId,
+                                        "-- Seleccione --",
+                                        new { @class = "form-select", id = "PersonaJuridicalId", style = "width:100%;" }
+                                    )
+                                </div>
+                                <!-- Botón Nuevo (abre modal) -->
+                                <button type="button"
+                                        id="btnNuevoPJ"
+                                        class="btn btn-outline-success flex-shrink-0"
+                                        data-url="@Url.Action("CreateModal","PersonaJuridicas")">
+                                    <i class="bi bi-plus-circle me-1"></i> Nuevo
+                                </button>
+                            </div>
                             @Html.ValidationMessageFor(m => m.PersonaJuridicalId, "", new { @class = "text-danger" })
                         </div>
 
@@ -142,4 +179,163 @@
             </div>
         </div>
     </div>
+}
+
+<!-- Modal Persona Jurídica -->
+<div class="modal fade" id="modalPJ" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-success-subtle">
+                <h5 class="modal-title">
+                    <i class="bi bi-buildings me-2 text-success"></i> Nueva Persona Jurídica
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <!-- Spinner de carga -->
+                <div class="d-flex align-items-center justify-content-center py-5" id="modalPJLoading">
+                    <div class="spinner-border me-2" role="status" aria-hidden="true"></div>
+                    <span>Cargando formulario...</span>
+                </div>
+                <!-- Aquí se inyecta la parcial -->
+                <div id="modalPJBody" class="p-3 d-none"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap 5: necesario para que el modal funcione -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(function () {
+            // --- Init Select2 ---
+            var $ddl = $('#PersonaJuridicalId');
+            if ($ddl.length && $ddl.data('select2') === undefined) {
+                $ddl.select2({
+                    width: '100%',
+                    placeholder: '-- Seleccione --',
+                    allowClear: true,
+                    language: {
+                        noResults: () => "Sin resultados",
+                        searching: () => "Buscando..."
+                    }
+                    // ,theme: 'bootstrap-5'
+                });
+            }
+
+            // --- Modal Nueva Persona Jurídica ---
+            var $modal = $('#modalPJ');
+            var $body = $('#modalPJBody');
+            var $loading = $('#modalPJLoading');
+            var bsModal = $modal.length ? new bootstrap.Modal($modal[0]) : null;
+
+            $('#btnNuevoPJ').on('click', function () {
+                if (!bsModal) return;
+                var url = $(this).data('url'); // ej: /PersonaJuridicas/CreateModal
+                if (!url) {
+                    console.warn('btnNuevoPJ: falta data-url');
+                    return;
+                }
+
+                // Estado de carga
+                $body.empty().addClass('d-none');
+                $loading.removeClass('d-none');
+                bsModal.show();
+
+                // Cargar parcial GET
+                $body.load(url, function (response, status) {
+                    $loading.addClass('d-none');
+                    $body.removeClass('d-none');
+
+                    if (status !== 'success') {
+                        $body.html('<div class="alert alert-danger mb-0">No se pudo cargar el formulario.</div>');
+                        return;
+                    }
+
+                    // Reparse unobtrusive (si la usas)
+                    if ($.validator && $.validator.unobtrusive) {
+                        $.validator.unobtrusive.parse($body);
+                    }
+
+                    // Interceptar submit del form dentro del modal
+                    $body.find('form').on('submit', function (e) {
+                        e.preventDefault();
+
+                        var $form = $(this);
+                        var $submit = $form.find('[type=submit]').prop('disabled', true);
+
+                        $.ajax({
+                            url: $form.attr('action'),
+                            type: 'POST',
+                            data: $form.serialize(),
+                            success: function (res) {
+                                // Espera JSON: { ok: true, id: 123, text: "RUC - Razón social" }
+                                if (res && res.ok) {
+                                    if ($ddl.length) {
+                                        // Agregar y seleccionar en Select2
+                                        var option = new Option(res.text, res.id, true, true);
+                                        $ddl.append(option).trigger('change');
+                                    }
+                                    bsModal.hide();
+                                } else if (res && res.html) {
+                                    // Reinyectar parcial con validación
+                                    $body.html(res.html);
+                                    if ($.validator && $.validator.unobtrusive) {
+                                        $.validator.unobtrusive.parse($body);
+                                    }
+                                } else {
+                                    $body.prepend('<div class="alert alert-danger">No se pudo guardar.</div>');
+                                }
+                            },
+                            error: function (xhr) {
+                                if (xhr.status === 400 || xhr.status === 422) {
+                                    $body.html(xhr.responseText || '<div class="alert alert-danger">Error de validación.</div>');
+                                    if ($.validator && $.validator.unobtrusive) {
+                                        $.validator.unobtrusive.parse($body);
+                                    }
+                                } else {
+                                    $body.prepend('<div class="alert alert-danger">Ocurrió un error al guardar.</div>');
+                                }
+                            },
+                            complete: function () {
+                                $submit.prop('disabled', false);
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+
+    <style>
+        /* Ajustes visuales para que Select2 no se vea "fino" */
+        .select2-container {
+            width: 100% !important;
+        }
+
+            .select2-container .select2-selection--single {
+                height: calc(2.5rem + 2px);
+                border: 1px solid var(--bs-border-color);
+                border-radius: .375rem;
+                padding: .375rem .75rem;
+            }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 1.5;
+            padding-left: 0;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: calc(2.5rem + 2px);
+            right: .5rem;
+        }
+    </style>
 }

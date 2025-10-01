@@ -12,6 +12,38 @@ namespace PortalCiudadano.Controllers
     {
         private PortalCiudadanoContext db = new PortalCiudadanoContext();
 
+        // GET: PersonaJuridicas/CreateModal
+        [HttpGet]
+        public ActionResult CreateModal()
+        {
+            var model = new PersonaJuridica();
+            return PartialView("_CreatePersonaJuridicaModal", model);
+        }
+
+        // POST: PersonaJuridicas/CreateModal
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateModal(PersonaJuridica model)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Devolver la parcial con validaciones para reinyectar en el modal
+                Response.StatusCode = 400; // Bad Request para que el JS entre en error y reemplace el body
+                return PartialView("_CreatePersonaJuridicaModal", model);
+            }
+
+            db.PersonaJuridicas.Add(model);
+            db.SaveChanges();
+
+            // Texto que quieres mostrar en el combo
+            // Si tienes una propiedad calculada tipo "RUC - Razón social", úsala aquí
+            var text = !string.IsNullOrWhiteSpace(model.PersonaJuridicaRazonSocial)
+                       ? $"{model.PersonaJuridicaRUC} - {model.PersonaJuridicaRazonSocial}"
+                       : model.PersonaJuridicaRUC;
+
+            return Json(new { ok = true, id = model.PersonaJuridicalId, text = text });
+        }
+
         // GET: PersonaJuridicas
         public async Task<ActionResult> Index()
         {
