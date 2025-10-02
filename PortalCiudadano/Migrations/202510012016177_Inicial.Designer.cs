@@ -7,13 +7,13 @@ namespace PortalCiudadano.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class LiquidacionPatentePN : IMigrationMetadata
+    public sealed partial class Inicial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(LiquidacionPatentePN));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Inicial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202509261921539_LiquidacionPatentePN"; }
+            get { return "202510012016177_Inicial"; }
         }
         
         string IMigrationMetadata.Source

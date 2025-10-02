@@ -199,57 +199,9 @@
     <Compile Include="Helpers\ServicioConsultaDeuda.cs" />
     <Compile Include="Helpers\ServicioConsultaPersonas.cs" />
     <Compile Include="Helpers\UsersHelper.cs" />
-    <Compile Include="Migrations\202501110358353_InitialCreate.cs" />
-    <Compile Include="Migrations\202501110358353_InitialCreate.Designer.cs">
-      <DependentUpon>202501110358353_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202501270348133_NombreDeLaMigracion.cs" />
-    <Compile Include="Migrations\202501270348133_NombreDeLaMigracion.Designer.cs">
-      <DependentUpon>202501270348133_NombreDeLaMigracion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202501291839029_cambio Id user.cs" />
-    <Compile Include="Migrations\202501291839029_cambio Id user.Designer.cs">
-      <DependentUpon>202501291839029_cambio Id user.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202502220225387_Cambios.cs" />
-    <Compile Include="Migrations\202502220225387_Cambios.Designer.cs">
-      <DependentUpon>202502220225387_Cambios.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202503010316519_Mapa.cs" />
-    <Compile Include="Migrations\202503010316519_Mapa.Designer.cs">
-      <DependentUpon>202503010316519_Mapa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509251833016_Inicial.cs" />
-    <Compile Include="Migrations\202509251833016_Inicial.Designer.cs">
-      <DependentUpon>202509251833016_Inicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509251842001_Persona_Natural_Juridica.cs" />
-    <Compile Include="Migrations\202509251842001_Persona_Natural_Juridica.Designer.cs">
-      <DependentUpon>202509251842001_Persona_Natural_Juridica.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509252153040_Clasificacion.cs" />
-    <Compile Include="Migrations\202509252153040_Clasificacion.Designer.cs">
-      <DependentUpon>202509252153040_Clasificacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509260330274_Actividad.cs" />
-    <Compile Include="Migrations\202509260330274_Actividad.Designer.cs">
-      <DependentUpon>202509260330274_Actividad.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509260403177_InfoEstadistica.cs" />
-    <Compile Include="Migrations\202509260403177_InfoEstadistica.Designer.cs">
-      <DependentUpon>202509260403177_InfoEstadistica.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509261503576_CantidadEmpleados.cs" />
-    <Compile Include="Migrations\202509261503576_CantidadEmpleados.Designer.cs">
-      <DependentUpon>202509261503576_CantidadEmpleados.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509261921539_LiquidacionPatentePN.cs" />
-    <Compile Include="Migrations\202509261921539_LiquidacionPatentePN.Designer.cs">
-      <DependentUpon>202509261921539_LiquidacionPatentePN.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202509291414301_LiquidarPatentePJ.cs" />
-    <Compile Include="Migrations\202509291414301_LiquidarPatentePJ.Designer.cs">
-      <DependentUpon>202509291414301_LiquidarPatentePJ.cs</DependentUpon>
+    <Compile Include="Migrations\202510012016177_Inicial.cs" />
+    <Compile Include="Migrations\202510012016177_Inicial.Designer.cs">
+      <DependentUpon>202510012016177_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -288,6 +240,7 @@
     <Compile Include="ViewModels\ComponenteAPI.cs" />
     <Compile Include="ViewModels\PersonaAPI.cs" />
     <Compile Include="ViewModels\PersonaViewModelAPI.cs" />
+    <Compile Include="ViewModels\Reports\LiquidarPatentePNReportDTO.cs" />
     <Compile Include="ViewModels\Reports\ServicioLimpiezaReportDTO.cs" />
     <Compile Include="ViewModels\RoleView.cs" />
     <Compile Include="ViewModels\RubroAPI.cs" />
@@ -473,44 +426,8 @@
     <Content Include="Scripts\jquery-3.7.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202501110358353_InitialCreate.resx">
-      <DependentUpon>202501110358353_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202501270348133_NombreDeLaMigracion.resx">
-      <DependentUpon>202501270348133_NombreDeLaMigracion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202501291839029_cambio Id user.resx">
-      <DependentUpon>202501291839029_cambio Id user.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202502220225387_Cambios.resx">
-      <DependentUpon>202502220225387_Cambios.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202503010316519_Mapa.resx">
-      <DependentUpon>202503010316519_Mapa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509251833016_Inicial.resx">
-      <DependentUpon>202509251833016_Inicial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509251842001_Persona_Natural_Juridica.resx">
-      <DependentUpon>202509251842001_Persona_Natural_Juridica.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509252153040_Clasificacion.resx">
-      <DependentUpon>202509252153040_Clasificacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509260330274_Actividad.resx">
-      <DependentUpon>202509260330274_Actividad.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509260403177_InfoEstadistica.resx">
-      <DependentUpon>202509260403177_InfoEstadistica.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509261503576_CantidadEmpleados.resx">
-      <DependentUpon>202509261503576_CantidadEmpleados.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509261921539_LiquidacionPatentePN.resx">
-      <DependentUpon>202509261921539_LiquidacionPatentePN.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202509291414301_LiquidarPatentePJ.resx">
-      <DependentUpon>202509291414301_LiquidarPatentePJ.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202510012016177_Inicial.resx">
+      <DependentUpon>202510012016177_Inicial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\LiquidacionPatente\LiquidPatenPersonN.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

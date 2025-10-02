@@ -1,8 +1,12 @@
-﻿using PortalCiudadano.Models;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using PortalCiudadano.Models;
 using PortalCiudadano.Models.LiquidacionPatente;
+using PortalCiudadano.ViewModels.Reports;
 using System;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,6 +17,58 @@ namespace PortalCiudadano.Controllers
     public class LiquidarPatentePNsController : Controller
     {
         private PortalCiudadanoContext db = new PortalCiudadanoContext();
+
+        public ActionResult GetLiquidacionPNReport(int? id)
+        {
+            if (id == null) return HttpNotFound();
+
+            var datos = db.LiquidarPatentePNs
+                .Where(p => p.LiquidarPatentePNId == id)
+                .Select(p => new LiquidarPatentePNReportDto
+                {
+                    LiquidarPatentePNId = p.LiquidarPatentePNId,
+                    Contador = p.Contador,
+                    TipoSolicitud = p.TipoSolicitud,
+                    TipoSolicitudNombre = (p.TipoSolicitud == 1 ? "Primera vez"
+                                           : p.TipoSolicitud == 2 ? "Renovación" : "N/D"),
+                    NumPatenteAsignada = p.NumPatenteAsignada,
+                    FechaCreada = p.FechaCreada,
+
+                    PersonaNaturalCedula = p.PersonaNatural.PersonaNaturalCedula,
+                    PersonaNaturalRUC = p.PersonaNatural.PersonaNaturalRUC,
+                    PersonaNaturalNombres = p.PersonaNatural.PersonaNaturalNombres,
+                    PersonaNaturalApellidos = p.PersonaNatural.PersonaNaturalApellidos,
+                    DireccionContribuyente = p.PersonaNatural.DireccionContribuyente,
+                    TelefonoContribuyente = p.PersonaNatural.TelefonoContribuyente,
+                    FaxContribuyente = p.PersonaNatural.FaxContribuyente,
+                    CasillaContribuyente = p.PersonaNatural.CasillaContribuyente,
+                    ObligadoContabilidadTexto = p.PersonaNatural.ObligadoContabilidad ? "Sí" : "No",
+                    InicioActividad = p.PersonaNatural.InicioActividad,
+                    CapitalPropio = p.PersonaNatural.CapitalPropio,
+                    FechaCreacionPersona = p.PersonaNatural.FechaCreacion,
+
+                    NumeroEmpleados = p.CantidadEmpleado.NumeroEmpleados,
+                    IndoEstadisticaProducName = p.InfoEstadisticaProduc.IndoEstadisticaProducName,
+                    NombreClasificacion = p.Clasificacion.NombreClasificacion,
+                    NombreActividad = p.Actividad.NombreActividad
+                })
+                .ToList();
+
+            if (datos.Count == 0) return HttpNotFound();
+
+            var rpt = new ReportDocument();
+            var path = Server.MapPath("~/Reports/LiquidacionPatente/LiquidPatenPersonN.rpt");
+            rpt.Load(path);
+            rpt.SetDataSource(datos);
+
+            // Para ver en iframe/nueva pestaña
+            Response.AppendHeader("Content-Disposition", $"inline; filename=Patente_PN_{id}.pdf");
+
+            // NO usar using aquí; no cierres el stream antes de devolverlo
+            Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "application/pdf");
+        }
 
         public async Task<ActionResult> Index()
         {

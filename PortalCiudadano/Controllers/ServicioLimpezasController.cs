@@ -25,7 +25,6 @@ namespace PortalCiudadano.Controllers
                 .Include(s => s.User)
                 .Include(s => s.TipoServicio);
             return View(servicioLimpezas.ToList());
-
         }
 
         public ActionResult PrintServicioLimpiezas(int? Id)
@@ -85,7 +84,6 @@ namespace PortalCiudadano.Controllers
 
             return File(stream, "application/pdf");
         }
-
 
         public ActionResult Details(int? id)
         {
@@ -160,8 +158,6 @@ namespace PortalCiudadano.Controllers
             return View(servicioLimpeza);
         }
 
-
-
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -185,7 +181,6 @@ namespace PortalCiudadano.Controllers
 
             return View(servicioLimpeza);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
