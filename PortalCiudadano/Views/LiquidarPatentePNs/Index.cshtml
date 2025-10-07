@@ -90,7 +90,10 @@
                                     <a href="@Url.Action("Details", new { id = item.LiquidarPatentePNId })" class="btn btn-sm btn-outline-info me-1" title="Detalles">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    @Html.ActionLink("Imprimir", "GetLiquidacionPNReport", "LiquidarPatentePNs", new { id = item.LiquidarPatentePNId }, new { @class = "btn btn-sm btn-outline-secondary", target = "_blank" })
+
+                                    <a href="@Url.Action("GetLiquidacionPNReport", new { id = item.LiquidarPatentePNId })" class="btn btn-sm btn-outline-success" title="Imprimir" target = "_blank">
+                                        <i class="bi bi-printer"></i>
+                                    </a>
 
                                     <a href="@Url.Action("Delete", new { id = item.LiquidarPatentePNId })" class="btn btn-sm btn-outline-danger" title="Eliminar">
                                         <i class="bi bi-trash"></i>

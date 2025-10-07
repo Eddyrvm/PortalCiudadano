@@ -7,12 +7,100 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using PortalCiudadano.ViewModels.Reports;
+using System.IO;
 
 namespace PortalCiudadano.Controllers
 {
     public class LiquidarPatentePJsController : Controller
     {
         private PortalCiudadanoContext db = new PortalCiudadanoContext();
+
+        // GET: LiquidarPatentePJs/GetLiquidacionPJReport/5
+        public ActionResult GetLiquidacionPJReport(int? id)
+        {
+            if (id == null) return HttpNotFound();
+
+            var datos = db.LiquidarPatentePJs
+                .Where(p => p.LiquidarPatentePJId == id)
+                .Select(p => new LiquidarPatentePJReportDTO
+                {
+                    // Cabecera
+                    LiquidarPatentePJId = p.LiquidarPatentePJId,
+                    Contador = p.Contador,
+                    TipoSolicitud = p.TipoSolicitud,
+                    TipoSolicitudNombre = (p.TipoSolicitud == 1 ? "Primera vez"
+                                           : p.TipoSolicitud == 2 ? "Renovación" : "N/D"),
+                    NumPatenteAsignada = p.NumPatenteAsignada,
+
+                    // Descomenta si tu entidad PJ tiene esta propiedad:
+                    // FechaCreada = p.FechaCreada,
+
+                    // Persona Jurídica (ajusta nombres según tu modelo)
+                    PersonaJuridicalId = p.PersonaJuridicalId,
+                    PersonaJuridicaRUC = p.PersonaJuridicas.PersonaJuridicaRUC,
+                    PersonaJuridicaRazonSocial = p.PersonaJuridicas.PersonaJuridicaRazonSocial,
+                    PersonaJuridicaNombres = p.PersonaJuridicas.PersonaJuridicaNombres,
+                    PersonaJuridicaApellidos = p.PersonaJuridicas.PersonaJuridicaApellidos,
+                    DireccionContribuyente = p.PersonaJuridicas.DireccionContribuyente,
+                    TelefonoContribuyente = p.PersonaJuridicas.TelefonoContribuyente,
+                    FaxContribuyente = p.PersonaJuridicas.FaxContribuyente,
+                    CasillaContribuyente = p.PersonaJuridicas.CasillaContribuyente,
+
+                    // Si ObligadoContabilidad es bool:
+                    ObligadoContabilidadTexto = (p.PersonaJuridicas.ObligadoContabilidad ? "Sí" : "No"),
+                    // Si fuera string "Si"/"No", usa:
+                    // ObligadoContabilidadTexto = (p.PersonaJuridicas.ObligadoContabilidad == "Si" ? "Sí" : "No"),
+
+                    InicioActividad = p.PersonaJuridicas.InicioActividad,
+                    CapitalPropio = p.PersonaJuridicas.CapitalPropio,
+                    FechaCreacionPersona = p.PersonaJuridicas.FechaCreacion,
+
+                    // Relacionados
+                    NumeroEmpleados = p.CantidadEmpleado.NumeroEmpleados,
+                    IndoEstadisticaProducName = p.InfoEstadisticaProduc.IndoEstadisticaProducName,
+                    NombreClasificacion = p.Clasificacion.NombreClasificacion,
+                    NombreActividad = p.Actividad.NombreActividad
+                })
+                .ToList();
+
+            if (datos.Count == 0) return HttpNotFound("No existe la liquidación solicitada.");
+
+            // Carga del .rpt diseñado contra LiquidarPatentePJReportDTO
+            var reportPath = Server.MapPath("~/Reports/LiquidacionPatente/LiquidPatenPersonaJ.rpt"); // ajusta el nombre si usaste otro
+            var fileName = $"Patente_PJ_{id}.pdf";
+            byte[] bytes;
+
+            var rd = new ReportDocument();
+            try
+            {
+                rd.Load(reportPath);
+                rd.SetDataSource(datos);
+
+                // (Opcional) limpia headers/buffer de Crystal
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
+
+                using (var cr = rd.ExportToStream(ExportFormatType.PortableDocFormat))
+                using (var ms = new MemoryStream())
+                {
+                    cr.CopyTo(ms);
+                    bytes = ms.ToArray();
+                }
+            }
+            finally
+            {
+                rd.Close();
+                rd.Dispose();
+            }
+
+            // Mostrar inline (en pestaña/iframe)
+            Response.AppendHeader("Content-Disposition", $"inline; filename={fileName}");
+            return File(bytes, "application/pdf");
+        }
 
         // GET: LiquidarPatentePJs
         public async Task<ActionResult> Index()

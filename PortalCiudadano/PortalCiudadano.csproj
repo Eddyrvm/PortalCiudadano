@@ -224,6 +224,12 @@
     <Compile Include="Models\ServiciosPublicos\TipoServicio.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\LiquidacionPatente\LiquidPatenPersonaJ.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiquidPatenPersonaJ.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\LiquidacionPatente\LiquidPatenPersonN.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -240,6 +246,7 @@
     <Compile Include="ViewModels\ComponenteAPI.cs" />
     <Compile Include="ViewModels\PersonaAPI.cs" />
     <Compile Include="ViewModels\PersonaViewModelAPI.cs" />
+    <Compile Include="ViewModels\Reports\LiquidarPatentePJReportDTO.cs" />
     <Compile Include="ViewModels\Reports\LiquidarPatentePNReportDTO.cs" />
     <Compile Include="ViewModels\Reports\ServicioLimpiezaReportDTO.cs" />
     <Compile Include="ViewModels\RoleView.cs" />
@@ -428,6 +435,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202510012016177_Inicial.resx">
       <DependentUpon>202510012016177_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\LiquidacionPatente\LiquidPatenPersonaJ.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LiquidPatenPersonaJ.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\LiquidacionPatente\LiquidPatenPersonN.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
