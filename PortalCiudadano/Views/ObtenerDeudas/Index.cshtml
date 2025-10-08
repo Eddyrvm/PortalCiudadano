@@ -1,0 +1,344 @@
+﻿@model PortalCiudadano.Models.ConsultaDeudas.DeudasVM
+@using System.Globalization
+@{
+    ViewBag.Title = "Consulta de Deudas";
+    var ec = new CultureInfo("es-EC");
+    var hasResults = Model != null &&
+                     (
+                         (Model.TotalGeneral > 0m) ||
+                         (Model.Persona != null) ||
+                         (Model.Componentes != null && Model.Componentes.Any())
+                     );
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between rounded-top-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-search me-2"></i>
+                        <span class="fw-semibold">Consulta de Deudas</span>
+                    </div>
+
+                    @if (hasResults)
+                    {
+                        <a class="btn btn-light btn-sm" href="@Url.Action("Index")" title="Nueva consulta">
+                            <i class="bi bi-arrow-clockwise me-1"></i> Nueva consulta
+                        </a>
+                    }
+                </div>
+
+                <div class="card-body">
+
+                    @* FORMULARIO (solo cuando NO hay resultados) *@
+                    @if (!hasResults)
+                    {
+                        using (Html.BeginForm("ObtenerDeudas", null, FormMethod.Post, new { id = "frmBusqueda" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-8 col-lg-7">
+                                    <label for="valorB" class="form-label text-center w-100">
+                                        <i class="bi bi-credit-card-2-front me-1"></i> Cédula / Identificador
+                                    </label>
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           id="valorB"
+                                           name="valorB"
+                                           inputmode="numeric"
+                                           autocomplete="off"
+                                           maxlength="13"
+                                           pattern="^\d{1,13}$"
+                                           title="Ingrese solo números (máximo 13 dígitos)."
+                                           placeholder="Ej: 1306874197"
+                                           required />
+                                    <div class="invalid-feedback text-center">
+                                        Ingrese solo números (máximo 13 dígitos).
+                                    </div>
+
+                                    <div class="d-grid mt-3">
+                                        <button type="submit" id="btnBuscar" class="btn btn-primary">
+                                            <i class="bi bi-search me-1"></i> Buscar
+                                        </button>
+
+                                        <button type="button" id="btnBuscarLoading" class="btn btn-primary d-none" disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            <span class="ms-2">Buscando...</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="form-text text-center mt-2">
+                                        Solo números, sin espacios ni caracteres especiales (máx. 13).
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    @* MENSAJES *@
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.Message as string))
+                    {
+                        <div class="alert alert-warning mt-3">@Html.Raw(ViewBag.Message)</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model?.Mensaje))
+                    {
+                        <div class="alert alert-warning mt-3">@Html.Raw(Model.Mensaje)</div>
+                    }
+
+                    @* RESULTADOS *@
+                    @if (hasResults)
+                    {
+                        @* TOTAL EN GRANDE *@
+                        <div class="text-center mb-4">
+                            <div class="small text-muted">Valor total de la deuda</div>
+                            <div class="display-4 fw-bold">
+                                @String.Format(ec, "{0:C2}", Model.TotalGeneral)
+                            </div>
+                        </div>
+
+                        @* DATOS DEL CONTRIBUYENTE (una sola tarjeta) *@
+                        <div class="mb-4">
+                            <div class="border rounded-3">
+                                <div class="px-3 py-2 bg-light border-bottom rounded-top-3 d-flex align-items-center">
+                                    <i class="bi bi-person-badge me-2"></i>
+                                    <strong>Datos del contribuyente</strong>
+                                </div>
+                                <div class="p-3">
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-4">
+                                            <div class="d-flex">
+                                                <i class="bi bi-calendar-event me-2 mt-1"></i>
+                                                <div>
+                                                    <div class="small text-muted">Fecha de consulta</div>
+                                                    <div class="fw-semibold">
+                                                        @(Model.FechaConsulta != null
+                                ? Model.FechaConsulta.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")
+                                : "-")
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-5">
+                                            <div class="d-flex">
+                                                <i class="bi bi-person-vcard me-2 mt-1"></i>
+                                                <div>
+                                                    <div class="small text-muted">Contribuyente</div>
+                                                    <div class="fw-semibold">@Model.Contribuyente</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <div class="d-flex">
+                                                <i class="bi bi-credit-card me-2 mt-1"></i>
+                                                <div>
+                                                    <div class="small text-muted">Cédula</div>
+                                                    <div class="fw-semibold">@Model.Cedula</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* COMPONENTES -> TÍTULOS -> RUBROS *@
+                        if (Model.Componentes != null && Model.Componentes.Any())
+                        {
+                            <div class="accordion" id="accComponentes">
+                                @for (int i = 0; i < Model.Componentes.Count; i++)
+                                {
+                                    var comp = Model.Componentes[i];
+                                    var cid = $"comp{i}";
+                                    <div class="accordion-item mb-2 rounded-3 overflow-hidden">
+                                        <h2 class="accordion-header" id="h-@cid">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-@cid" aria-expanded="false" aria-controls="c-@cid">
+                                                <i class="bi bi-diagram-3 me-2"></i> @comp.NombreMiembro
+                                                <span class="ms-auto small d-flex align-items-center">
+                                                    <i class="bi bi-cash-coin me-1"></i> Total componente:
+                                                    <span class="ms-1">@String.Format(ec, "{0:C2}", comp.Valor)</span>
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="c-@cid" class="accordion-collapse collapse" aria-labelledby="h-@cid" data-bs-parent="#accComponentes">
+                                            <div class="accordion-body p-2">
+
+                                                @if (comp.Titulos != null && comp.Titulos.Any())
+                                                {
+                                                    <div class="accordion" id="accTit-@cid">
+                                                        @for (int j = 0; j < comp.Titulos.Count; j++)
+                                                        {
+                                                            var t = comp.Titulos[j];
+                                                            var tid = $"{cid}-t{j}";
+                                                            <div class="accordion-item mb-2 rounded-3 overflow-hidden">
+                                                                <h2 class="accordion-header" id="h-@tid">
+                                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-@tid" aria-expanded="false" aria-controls="c-@tid">
+                                                                        <i class="bi bi-receipt me-2"></i> Título @t.Periodo
+                                                                        <span class="ms-auto small d-flex align-items-center">
+                                                                            <i class="bi bi-currency-dollar me-1"></i> Valor total:
+                                                                            <span class="ms-1">
+                                                                                @(t.ValorTotalDecimal > 0
+                                            ? String.Format(ec, "{0:C2}", t.ValorTotalDecimal)
+                                            : t.ValorTotalTexto)
+                                                                            </span>
+                                                                        </span>
+                                                                    </button>
+                                                                </h2>
+                                                                <div id="c-@tid" class="accordion-collapse collapse" aria-labelledby="h-@tid" data-bs-parent="#accTit-@cid">
+                                                                    <div class="accordion-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <ul class="list-unstyled mb-2">
+                                                                                    <li><i class="bi bi-hash me-1"></i><strong>Clave predial:</strong> @t.ClavePredial</li>
+                                                                                    <li><i class="bi bi-123 me-1"></i><strong>Periodo:</strong> @t.Periodo (@t.Year-@t.Month)</li>
+                                                                                    @* QUITADO: Emisión y Obligación *@
+                                                                                    <li><i class="bi bi-calendar-x me-1"></i><strong>Pago:</strong> @(t.FechaPago?.Year > 1 ? t.FechaPago?.ToString("yyyy-MM-dd") : "-")</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <ul class="list-unstyled mb-2">
+                                                                                    <li><i class="bi bi-wallet2 me-1"></i><strong>Valor Neto:</strong> @String.Format(ec, "{0:C2}", t.ValorNeto)</li>
+                                                                                    <li><i class="bi bi-graph-up-arrow me-1"></i><strong>Interés:</strong> @String.Format(ec, "{0:C2}", t.ValorInteres)</li>
+                                                                                    <li><i class="bi bi-receipt-cutoff me-1"></i><strong>Emisión:</strong> @String.Format(ec, "{0:C2}", t.ValorEmision)</li>
+                                                                                    <li><i class="bi bi-arrow-down-circle me-1"></i><strong>Abono:</strong> @String.Format(ec, "{0:C2}", t.ValorAbono)</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        @if (t.Rubros != null && t.Rubros.Any())
+                                                                        {
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-sm table-bordered align-middle">
+                                                                                    <thead class="table-light">
+                                                                                        <tr>
+                                                                                            <th>Rubro</th>
+                                                                                            <th class="text-end">Valor</th>
+                                                                                            <th class="text-end">Emisión</th>
+                                                                                            <th class="text-end">Interés</th>
+                                                                                            <th class="text-end">Total</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach (var r in t.Rubros)
+                                                                                        {
+                                                                                            <tr>
+                                                                                                <td>@r.NombreRubro</td>
+                                                                                                <td class="text-end">@String.Format(ec, "{0:C2}", r.Valor)</td>
+                                                                                                <td class="text-end">@String.Format(ec, "{0:C2}", r.Emision)</td>
+                                                                                                <td class="text-end">@String.Format(ec, "{0:C2}", r.Interes)</td>
+                                                                                                <td class="text-end">@String.Format(ec, "{0:C2}", r.Total)</td>
+                                                                                            </tr>
+                                                                                        }
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        }
+
+                                                                        <div class="row mt-2">
+                                                                            <div class="col-md-6">
+                                                                                <div class="card border-0 shadow-sm">
+                                                                                    <div class="card-header bg-light">
+                                                                                        <i class="bi bi-graph-up me-1"></i> Interés
+                                                                                    </div>
+                                                                                    <div class="card-body">
+                                                                                        @if (t.Interes != null)
+                                                                                        {
+                                                                                            <div class="d-flex justify-content-between">
+                                                                                                <span>@t.Interes.NombreRubro</span>
+                                                                                                <strong>@String.Format(ec, "{0:C2}", t.Interes.Total)</strong>
+                                                                                            </div>
+                                                                                        }
+                                                                                        else
+                                                                                        { <span class="text-muted">-</span>}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="card border-0 shadow-sm">
+                                                                                    <div class="card-header bg-light">
+                                                                                        <i class="bi bi-receipt me-1"></i> Emisión
+                                                                                    </div>
+                                                                                    <div class="card-body">
+                                                                                        @if (t.Emision != null)
+                                                                                        {
+                                                                                            <div class="d-flex justify-content-between">
+                                                                                                <span>@t.Emision.NombreRubro</span>
+                                                                                                <strong>@String.Format(ec, "{0:C2}", t.Emision.Total)</strong>
+                                                                                            </div>
+                                                                                        }
+                                                                                        else
+                                                                                        { <span class="text-muted">-</span>}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="text-muted">Sin títulos.</div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info">Sin componentes para mostrar.</div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info mt-3">
+                            <i class="bi bi-info-circle me-1"></i> Realiza una búsqueda para ver resultados.
+                        </div>
+                    }
+
+                </div> <!--/card-body-->
+            </div>   <!--/card-->
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const form = document.getElementById('frmBusqueda');
+            if (!form) return; // cuando hay resultados, no se renderiza el formulario
+
+            const input = document.getElementById('valorB');
+            const btnBuscar = document.getElementById('btnBuscar');
+            const btnLoading = document.getElementById('btnBuscarLoading');
+
+            // Solo dígitos, máximo 13
+            input.addEventListener('input', () => {
+                const onlyDigits = input.value.replace(/\D+/g, '');
+                input.value = onlyDigits.slice(0, 13);
+                if (/^\d{1,13}$/.test(input.value)) input.classList.remove('is-invalid');
+            });
+
+            // Spinner al enviar
+            form.addEventListener('submit', (e) => {
+                if (!/^\d{1,13}$/.test(input.value)) {
+                    e.preventDefault();
+                    input.classList.add('is-invalid');
+                    input.focus();
+                    return;
+                }
+                btnBuscar.classList.add('d-none');
+                btnLoading.classList.remove('d-none');
+                input.setAttribute('readonly', 'readonly');
+            });
+        })();
+    </script>
+}

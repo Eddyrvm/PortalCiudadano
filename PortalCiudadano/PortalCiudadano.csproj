@@ -181,6 +181,7 @@
     <Compile Include="Controllers\LiquidarPatentePNsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MapSitiosController.cs" />
+    <Compile Include="Controllers\ObtenerDeudasController.cs" />
     <Compile Include="Controllers\PersonaJuridicasController.cs" />
     <Compile Include="Controllers\PersonaNaturalesController.cs" />
     <Compile Include="Controllers\ServicioLimpezasController.cs" />
@@ -205,6 +206,11 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ConsultaDeudas\ComponenteVM.cs" />
+    <Compile Include="Models\ConsultaDeudas\DeudasVM.cs" />
+    <Compile Include="Models\ConsultaDeudas\PersonaVM.cs" />
+    <Compile Include="Models\ConsultaDeudas\RubroVM.cs" />
+    <Compile Include="Models\ConsultaDeudas\TituloVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LiquidacionPatente\Actividad.cs" />
     <Compile Include="Models\LiquidacionPatente\CantidadEmpleado.cs" />
@@ -395,6 +401,7 @@
     <Content Include="Views\LiquidarPatentePJs\Edit.cshtml" />
     <Content Include="Views\LiquidarPatentePJs\Index.cshtml" />
     <Content Include="Views\PersonaJuridicas\_CreatePersonaJuridicaModal.cshtml" />
+    <Content Include="Views\ObtenerDeudas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
