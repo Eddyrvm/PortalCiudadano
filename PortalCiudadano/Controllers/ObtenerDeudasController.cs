@@ -210,6 +210,13 @@ namespace PortalCiudadano.Controllers
 
                             comp.Titulos.Add(t);
                         }
+                        vm.PropiedadesCount = (vm.Componentes ?? new List<ComponenteVM>())
+                        .Where(c => c.Titulos != null)
+                        .SelectMany(c => c.Titulos)
+                        .Select(t => t.ClavePredial)
+                        .Where(cp => !string.IsNullOrWhiteSpace(cp))
+                        .Distinct()
+                        .Count();
 
                         vm.Componentes.Add(comp);
                     }

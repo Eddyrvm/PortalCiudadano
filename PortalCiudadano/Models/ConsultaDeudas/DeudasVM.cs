@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace PortalCiudadano.Models.ConsultaDeudas
 {
@@ -29,5 +27,12 @@ namespace PortalCiudadano.Models.ConsultaDeudas
         public string Mensaje { get; set; } // puede ser null
 
         public decimal TotalGeneral { get; set; }
+        public int PropiedadesCount { get; set; }
+
+        public decimal DescuentoTerceraEdad { get; set; }
+
+        public decimal DescuentoHipoteca { get; set; }
+
+        public decimal DescuentoDiscapacidad { get; set; }
     }
 }
